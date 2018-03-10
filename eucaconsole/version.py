@@ -24,25 +24,18 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import os.path
-import subprocess
 
 
 __version__ = 'devel'
 
 
 if '__file__' in globals():
-    # Check if this is a git repo; maybe we can get more precise version info
+    # Check if a VERSION file is present
     try:
-        repo_path = os.path.join(os.path.dirname(__file__), '..')
-        git = subprocess.Popen(['git', 'describe'], stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE,
-                               env={'GIT_DIR': os.path.join(repo_path, '.git')})
-        git.wait()
-        git.stderr.read()
-        if git.returncode == 0:
-            __version__ = git.stdout.read().strip().lstrip('v')
-            if type(__version__).__name__ == 'bytes':
-                __version__ = __version__.decode()
+        version_path = os.path.join(os.path.dirname(__file__), '..', 'VERSION')
+        if os.path.isfile(version_path):
+            with open(version_path) as version_file:
+                __version__ = version_file.read().strip()
     except:
         # Not really a bad thing; we'll just use what we had
         pass
