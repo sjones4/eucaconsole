@@ -25,8 +25,10 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+%{!?version: %define version 4.4}
+
 Name:           eucaconsole
-Version:        4.4.2
+Version:        %{version}
 Release:        0%{?build_id:.%build_id}%{?dist}
 Summary:        Eucalyptus Management Console
 
@@ -194,6 +196,9 @@ if [ "$1" -ge "1" ] ; then
 fi
 
 %changelog
+* Fri Mar  9 2018 Steve Jones <steve.jones@appscale.com> - 4.4.3
+- Build now handles rpm version
+
 * Mon Aug 28 2017 Matt Bacchi <mbacchi@dxc.com> - 4.4.2
 - Version bump (4.4.2)
 
