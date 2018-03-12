@@ -466,9 +466,9 @@ a.circle {
             }
         }
         &.warning {
-            border: 2px solid $dxc-yellow;
+            border: 2px solid $dxc-blue;
             .icon {
-                background-color: $dxc-yellow;
+                background-color: $dxc-blue;
                 span:before {
                     content: "\26A0"
                 }
@@ -1118,10 +1118,10 @@ textarea {
                 padding: 12px 38px 12px 22px;
                 &:hover {
                     &::after {
-                        border-top-color: $dxc-yellow;
+                        border-top-color: $dxc-blue;
                     }
                     a {
-                        color: $dxc-yellow;
+                        color: $dxc-blue;
                     }
                     background: $dxc-black;
                 }
@@ -1235,7 +1235,7 @@ footer {
     #dxc-logo {
         display: inline-block;
         width: 201px; height: 36px;
-        background: url('../img/dxc_logo_hz_wht_201x36.png') no-repeat;
+        background: url('../img/ase_logo_hz_wht_201x36.png') no-repeat;
     }
     .copyright {
         padding-top: 8px;
@@ -1256,7 +1256,7 @@ footer {
    Buttons
 ----------------------------------------- */
 .button {
-    background-color: $dxc-yellow;
+    background-color: $dxc-blue;
     font-family: $euca-header-font-family;
     font-weight: bold;
     text-transform: uppercase;
@@ -1264,7 +1264,7 @@ footer {
     border: none;
     &:hover, &:focus {
         background-color: $dxc-black;
-        color: $dxc-yellow;
+        color: $dxc-blue;
         text-decoration: none;
         outline: none;
     }
@@ -1581,7 +1581,7 @@ ul.resources-nav {
             vertical-align: middle;
         }
         span.active {
-            background-color: $dxc-yellow;
+            background-color: $dxc-blue;
             color: white;
         }
         i.icon {
@@ -1599,7 +1599,7 @@ ul.resources-nav {
         i.icon.instances.active { background-image: url(../img/nav/Instances_Active.svg); }
     }
     li.active {
-        background-color: $dxc-yellow !important;
+        background-color: $dxc-blue !important;
         color: $dxc-black !important;
     }
     i.icon {

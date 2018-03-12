@@ -139,7 +139,7 @@
 
 .euca-split { border-color: #000000 !important; width: 2.0rem !important; }
 .euca-split:hover { border-color: #ffffff !important; }
-.euca-split:hover::after { border-top-color: #ffed00 !important; }
+.euca-split:hover::after { border-top-color: #00c9ff !important; }
 
 .secondary .euca-split { border-color: #000000; }
 .secondary .euca-split:hover { border-color: #ffffff; }

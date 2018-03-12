@@ -99,10 +99,10 @@
     <footer>
         <div class="row">
             <div class="small-6 columns logo">
-                <a id="dxc-logo" href="http://dxc.technology/"></a>
+                <a id="dxc-logo" href="http://eucalyptus.cloud/"></a>
             </div>
             <div class="small-6 columns copyright">
-                © 2017 <a href="http://dxc.technology/">DXC Technology</a>
+                © 2018 <a href="https://www.appscale.com/">AppScale Systems, Inc.</a>
             </div>
         </div>
         <form id="euca-logout-form" method="post" action="${request.route_path('logout')}">

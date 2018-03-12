@@ -1703,8 +1703,8 @@ a.circle { color: black; display: inline-block; }
 #notifications .alert-box.success { border: 2px solid green; }
 #notifications .alert-box.success .icon { background-color: green; }
 #notifications .alert-box.success .icon span:before { content: "✓"; }
-#notifications .alert-box.warning { border: 2px solid #ffed00; }
-#notifications .alert-box.warning .icon { background-color: #ffed00; }
+#notifications .alert-box.warning { border: 2px solid #00c9ff; }
+#notifications .alert-box.warning .icon { background-color: #00c9ff; }
 #notifications .alert-box.warning .icon span:before { content: "⚠"; }
 #notifications .alert-box.info { border: 2px solid #000000; }
 #notifications .alert-box.info .icon { background-color: #000000; }
@@ -1881,8 +1881,8 @@ input, input[type="text"], input[type="password"], input[type="date"], input[typ
 .panel.has-actions .actions-menu { position: absolute; top: 10px; right: 10px; }
 .panel.has-actions .actions-menu .button.dropdown { padding: 12px 38px 12px 22px; }
 .panel.has-actions .actions-menu .button.dropdown:hover { background: #000000; }
-.panel.has-actions .actions-menu .button.dropdown:hover::after { border-top-color: #ffed00; }
-.panel.has-actions .actions-menu .button.dropdown:hover a { color: #ffed00; }
+.panel.has-actions .actions-menu .button.dropdown:hover::after { border-top-color: #00c9ff; }
+.panel.has-actions .actions-menu .button.dropdown:hover a { color: #00c9ff; }
 .panel.has-actions .actions-menu .button.dropdown a { color: #000000; }
 .panel.has-actions .actions-menu .button.dropdown a:hover { text-decoration: none; }
 .panel.has-actions .actions-menu .f-dropdown { min-width: 12rem; width: auto; }
@@ -1927,15 +1927,15 @@ table.table.smart-table .st-sort-descent:after { content: '\25BC'; }
 ----------------------------------------- */
 footer { background-color: #000000; color: white; padding: 15px 0 3rem 1rem; }
 footer .columns.logo { padding-left: 0.5rem; }
-footer #dxc-logo { display: inline-block; width: 201px; height: 36px; background: url("../img/dxc_logo_hz_wht_201x36.png") no-repeat; }
+footer #dxc-logo { display: inline-block; width: 201px; height: 36px; background: url("../img/ase_logo_hz_wht_201x36.png") no-repeat; }
 footer .copyright { padding-top: 8px; text-align: right; color: #666666; font-size: 14px; }
 footer .copyright a { color: #666666; }
 footer .copyright a:hover { text-decoration: underline; }
 
 /* ----------------------------------------- Buttons
 ----------------------------------------- */
-.button { background-color: #ffed00; font-family: "PT Sans", Verdana, Geneva, Lucida, sans-serif; font-weight: bold; text-transform: uppercase; color: #000000; border: none; }
-.button:hover, .button:focus { background-color: #000000; color: #ffed00; text-decoration: none; outline: none; }
+.button { background-color: #00c9ff; font-family: "PT Sans", Verdana, Geneva, Lucida, sans-serif; font-weight: bold; text-transform: uppercase; color: #000000; border: none; }
+.button:hover, .button:focus { background-color: #000000; color: #00c9ff; text-decoration: none; outline: none; }
 .button.secondary { background-color: #d9d9d9; font-family: "PT Sans", Verdana, Geneva, Lucida, sans-serif; text-transform: uppercase; color: #000000; }
 .button.secondary:hover { background-color: #666666; color: #000000; text-decoration: none; outline: none; }
 .button.secondary.disabled, .button.secondary[disabled] { background-color: #d9d9d9; color: #666666; cursor: default; }
@@ -2034,7 +2034,7 @@ ul.resources-nav li a { background-color: transparent; color: #666666; padding: 
 ul.resources-nav li a.active { color: #000000 !important; }
 ul.resources-nav li:hover { background-color: #d9d9d9; color: #666666; }
 ul.resources-nav li span { padding-left: 0.5rem; white-space: nowrap; display: inline-block; vertical-align: middle; }
-ul.resources-nav li span.active { background-color: #ffed00; color: white; }
+ul.resources-nav li span.active { background-color: #00c9ff; color: white; }
 ul.resources-nav li i.icon { position: absolute; left: 0.5rem; margin-top: 0.5rem; height: 2rem; width: 2rem; }
 ul.resources-nav li i.icon.dashboard { background-image: url(../img/nav/Dashboard.svg); }
 ul.resources-nav li i.icon.dashboard.active { background-image: url(../img/nav/Dashboard_Active.svg); }
@@ -2042,7 +2042,7 @@ ul.resources-nav li i.icon.images { background-image: url(../img/nav/Images.svg)
 ul.resources-nav li i.icon.images.active { background-image: url(../img/nav/Images_Active.svg); }
 ul.resources-nav li i.icon.instances { background-image: url(../img/nav/Instances.svg); }
 ul.resources-nav li i.icon.instances.active { background-image: url(../img/nav/Instances_Active.svg); }
-ul.resources-nav li.active { background-color: #ffed00 !important; color: #000000 !important; }
+ul.resources-nav li.active { background-color: #00c9ff !important; color: #000000 !important; }
 ul.resources-nav i.icon { position: absolute; left: 0.5rem; margin-top: 0.5rem; height: 2rem; width: 2rem; color: #000000; }
 ul.resources-nav i.icon.instances-cat { background-image: url(../img/nav/Instances.svg); }
 ul.resources-nav i.icon.autoscaling { background-image: url(../img/nav/Auto-Scaling-Groups.svg); }
