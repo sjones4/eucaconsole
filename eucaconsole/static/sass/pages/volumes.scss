@@ -11,11 +11,11 @@ $volume-status-color-creating: lighten(green, 15%);
 $volume-status-color-available: green;
 $volume-status-color-detached: green;
 $volume-status-color-detaching: lighten(green, 15%);
-$volume-status-color-deleting: $dxc-lightgray;
-$volume-status-color-deleted: $dxc-darkgray;
+$volume-status-color-deleting: $ase-lightgray;
+$volume-status-color-deleted: $ase-darkgray;
 $volume-status-color-error: darkred;
-$volume-status-color-attached: $dxc-black;
-$volume-status-color-attaching: lighten($dxc-black, 20%);
+$volume-status-color-attached: $ase-black;
+$volume-status-color-attaching: lighten($ase-black, 20%);
 
 .alarm-status.alarm { background-color: $alarm-status-color-alarm; }
 .alarm-status.insufficient_data { background-color: $alarm-status-color-insufficient-data; }

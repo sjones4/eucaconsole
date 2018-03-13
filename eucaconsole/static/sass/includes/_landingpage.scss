@@ -39,10 +39,10 @@ $tile-label-padding: 28px;
 $grid-dropdown-width: 160px;
 $gridwrapper-table-width: 100%;
 
-$dropdown-border-color: $dxc-lightgray;
+$dropdown-border-color: $ase-lightgray;
 
 $alarm-status-color-alarm: darkred;
-$alarm-status-color-insufficient: $dxc-darkgray;
+$alarm-status-color-insufficient: $ase-darkgray;
 $alarm-status-color-ok: green;
 
 .columns.datagrid {
@@ -62,9 +62,9 @@ $alarm-status-color-ok: green;
 }
 
 .clear-link {
-    color: $dxc-black;
+    color: $ase-black;
     &:hover {
-        color: $dxc-darkgray;
+        color: $ase-darkgray;
     }
 }
 
@@ -82,16 +82,16 @@ $alarm-status-color-ok: green;
             margin-left: 1rem;
             padding-right: 3rem;
             &:hover {
-                background-color: darken($dxc-lightgray, 10%);
+                background-color: darken($ase-lightgray, 10%);
             }
             &[disabled] {
                 border: none;
                 &:hover {
                     outline: none;
-                    background-color: $dxc-lightgray;
+                    background-color: $ase-lightgray;
                 }
                 &:after {
-                    border-color: $dxc-darkgray transparent transparent transparent;
+                    border-color: $ase-darkgray transparent transparent transparent;
                 }
             }
         }
@@ -112,9 +112,9 @@ $alarm-status-color-ok: green;
 }
 
 #refresh-btn {
-    color: $dxc-black;
+    color: $ase-black;
     &:hover {
-        color: $dxc-darkgray;
+        color: $ase-darkgray;
     }
 }
 
@@ -128,12 +128,12 @@ $alarm-status-color-ok: green;
         position: absolute;
         width: 30px; height: $tile-row-height;
         top: 0; right: 0;
-        color: $dxc-black;
+        color: $ase-black;
         font-size: 1.1rem;
         padding: 0 0 0 0;
         border: none;
         &:hover {
-            color: $dxc-darkgray;
+            color: $ase-darkgray;
             outline: none;
         }
         &::before, &::after {
@@ -150,16 +150,16 @@ $alarm-status-color-ok: green;
     }
     .alert-box {
         &.secondary {
-            color: $dxc-darkgray;
+            color: $ase-darkgray;
             background-color: white;
-            border: 1px solid $dxc-darkgray;
+            border: 1px solid $ase-darkgray;
         }
     }
 }
 
 // Tile/grid view
 .tile {
-    box-shadow: 0 2px 2px 0 $dxc-lightgray;
+    box-shadow: 0 2px 2px 0 $ase-lightgray;
     font-size: $euca-font-size;
     position: relative;
     display: inline-block;
@@ -182,7 +182,7 @@ $alarm-status-color-ok: green;
             position: absolute;
             top: 0; bottom: 0; left: 0; right: 0;
             &:hover {
-                background-color: $dxc-lightgray;
+                background-color: $ase-lightgray;
                 text-decoration: none;
             }
         }
@@ -194,15 +194,15 @@ $alarm-status-color-ok: green;
     .header {
         position: relative;
         height: $tile-row-height + 6px;
-        background-color: $dxc-black;
+        background-color: $ase-black;
         a {
             @include ellipsis-overflow;
             display: block;
             padding: 6px 30px 4px 10px;
-            color: $dxc-white;
+            color: $ase-white;
             font-family: $euca-header-font-family;
             &:hover {
-                color: $dxc-white;
+                color: $ase-white;
                 text-decoration: underline;
             }
             &.has-checkbox {
@@ -218,7 +218,7 @@ $alarm-status-color-ok: green;
             left: 7px;
         }
         .f-dropdown a {
-            color: $dxc-darkgray;
+            color: $ase-darkgray;
             font-family: $euca-text-font-family;
             text-decoration: none;
             font-weight: normal;
@@ -227,7 +227,7 @@ $alarm-status-color-ok: green;
             text-overflow: inherit;
         }
         .dropdown.button.tiny {
-            color: $dxc-white;
+            color: $ase-white;
         }
     }
     .content {
@@ -236,7 +236,7 @@ $alarm-status-color-ok: green;
         font-size: $euca-s-font-size;
         line-height: 1rem;
         a {
-            color: $dxc-black;
+            color: $ase-black;
             text-decoration: underline;
             &.label, &.alarm-status {
                 text-decoration: none;
@@ -255,8 +255,8 @@ $alarm-status-color-ok: green;
             margin-left: -$tile-label-padding;
             font-family: $euca-text-font-family;
             font-size: $euca-s-font-size;
-            background-color: $dxc-lightgray;
-            color: $dxc-darkgray;
+            background-color: $ase-lightgray;
+            color: $ase-darkgray;
             border-radius: 3px;
             margin-right: 0.2rem;
             min-width: 20px;
@@ -280,7 +280,7 @@ $alarm-status-color-ok: green;
     }
     .link {
         text-transform: uppercase;
-        color: $dxc-black;
+        color: $ase-black;
         padding: 1px 3px;
         margin-bottom: 2px;
         font-size: 0.9em;
@@ -291,7 +291,7 @@ $alarm-status-color-ok: green;
         left: 0; right: 0;
         padding: 5px;
         color: white;
-        background-color: $dxc-darkgray;
+        background-color: $ase-darkgray;
         text-align: center;
         line-height: 1.4rem;
         text-transform: capitalize;
@@ -348,13 +348,13 @@ $alarm-status-color-ok: green;
             padding: 8px 4px 8px 6px;
             vertical-align: top;
             a {
-                color: $dxc-black;
+                color: $ase-black;
                 text-decoration: underline;
                 &.label {
                     text-decoration: none;
                 }
                 &:hover {
-                    color: $dxc-darkgray;
+                    color: $ase-darkgray;
                     text-decoration: underline;
                 }
             }
@@ -371,7 +371,7 @@ $alarm-status-color-ok: green;
                 word-break: break-all;
             }
             .f-dropdown a {
-                color: $dxc-darkgray;
+                color: $ase-darkgray;
                 text-decoration: none;
                 &:hover {
                     text-decoration: none;
@@ -413,7 +413,7 @@ $alarm-status-color-ok: green;
         position: relative;
         input {
             background-color: transparent;
-            border-color: $dxc-lightgray;
+            border-color: $ase-lightgray;
         }
     }
     .go {
@@ -508,10 +508,10 @@ $alarm-status-color-ok: green;
     a {
         float: right;
         border-bottom: none;
-        color: $dxc-black;
+        color: $ase-black;
         &:hover {
             border-bottom: none;
-            color: $dxc-darkgray;
+            color: $ase-darkgray;
         }
     }
     label {
@@ -521,9 +521,9 @@ $alarm-status-color-ok: green;
     }
     .selected {
         background-color: white;
-        color: $dxc-black;
+        color: $ase-black;
         &:hover {
-            color: $dxc-black;
+            color: $ase-black;
             cursor: inherit;
         }
     }
@@ -580,21 +580,21 @@ $alarm-status-color-ok: green;
 }
 
 .euca-split {
-    border-color: $dxc-black !important;
+    border-color: $ase-black !important;
     width: 2.0rem !important;
     &:hover {
-        border-color: $dxc-white !important;
+        border-color: $ase-white !important;
         &::after {
-          border-top-color: $dxc-blue !important;
+          border-top-color: $ase-blue !important;
         }
     }
 }
 
 .secondary {
     .euca-split {
-        border-color: $dxc-black;
+        border-color: $ase-black;
         &:hover {
-            border-color: $dxc-white;
+            border-color: $ase-white;
         }
     }
 }
@@ -603,7 +603,7 @@ $alarm-status-color-ok: green;
     padding-right: 3.0rem !important;
     .euca-split {
         &:after {
-            border-color: $dxc-black transparent transparent transparent;
+            border-color: $ase-black transparent transparent transparent;
         }
     }
 }

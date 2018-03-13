@@ -44,8 +44,8 @@ from ..views import BaseView, boto_error_handler
 
 CHART_COLORS = {
     #  NOTE: NVD3 sets the seventh (index = 6) line color to red, so specify at least seven colors below
-    0: '#00c9ff',  # $dxc-blue
-    1: '#64ff00',  # $dxc-green
+    0: '#00c9ff',  # $ase-blue
+    1: '#64ff00',  # $ase-green
     2: 'purple',  # CSS Level 1 color
     3: 'navy',  # CSS Level 1 color
     4: 'green',  # CSS Level 1 color

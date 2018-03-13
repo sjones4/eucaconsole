@@ -99,7 +99,7 @@
     <footer>
         <div class="row">
             <div class="small-6 columns logo">
-                <a id="dxc-logo" href="http://eucalyptus.cloud/"></a>
+                <a id="ase-logo" href="http://eucalyptus.cloud/"></a>
             </div>
             <div class="small-6 columns copyright">
                 © 2018 <a href="https://www.appscale.com/">AppScale Systems, Inc.</a>
