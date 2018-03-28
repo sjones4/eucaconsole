@@ -38,12 +38,12 @@
         margin-bottom: 1.5rem;
     }
     .label.radius {
-        color: $dxc-darkgray;
+        color: $euca-darkgray;
         &.cert {
-            background-color: $dxc-lightgray;
+            background-color: $euca-lightgray;
         }
         &.bcert {
-            background-color: $dxc-lightgray;
+            background-color: $euca-lightgray;
             margin-right: 6px;
         }
     }
@@ -71,7 +71,7 @@
     .section-label {
         margin-top: 1.5rem;
         margin-bottom: 1rem;
-        color: $dxc-darkgray;
+        color: $euca-darkgray;
     }
     #backend-certificates-display {
         margin-bottom: 1rem;
@@ -98,7 +98,7 @@
             left: 14px;
         }
         #ssl-options-header {
-            color: $dxc-darkgray;
+            color: $euca-darkgray;
             margin-bottom: 0;
         }
     }

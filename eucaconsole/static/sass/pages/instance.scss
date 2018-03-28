@@ -10,11 +10,11 @@ $instance-status-color-running: green;
 $instance-status-color-pending: lighten(green, 15%);
 $instance-status-color-stopped: darkred;
 $instance-status-color-stopping: red;
-$instance-status-color-terminated: $dxc-darkgray;
-$instance-status-color-terminating: $dxc-lightgray;
+$instance-status-color-terminated: $euca-darkgray;
+$instance-status-color-terminating: $euca-lightgray;
 
-$volume-status-color-attached: $dxc-black;
-$volume-status-color-attaching: lighten($dxc-black, 20%);
+$volume-status-color-attached: $euca-black;
+$volume-status-color-attaching: lighten($euca-black, 20%);
 $volume-status-color-detaching: lighten(green, 15%);
 
 
