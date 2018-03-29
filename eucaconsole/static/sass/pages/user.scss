@@ -8,7 +8,7 @@
 
 // Status colors
 $keys-status-color-active: green;
-$keys-status-color-inactive: $dxc-darkgray;
+$keys-status-color-inactive: $euca-darkgray;
 
 
 // ***********
@@ -52,7 +52,7 @@ $keys-status-color-inactive: $dxc-darkgray;
 }
 
 .CodeMirror {
-    border: 1px solid $dxc-lightgray;
+    border: 1px solid $euca-lightgray;
     min-height: 400px;
 }
 

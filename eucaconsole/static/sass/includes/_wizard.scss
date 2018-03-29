@@ -41,7 +41,7 @@
             top: 0; left: 0; right: 0;
             line-height: 2.5rem;
             padding-left: 12px;
-            background-color: $dxc-black;
+            background-color: $euca-black;
             color: white;
             @include ellipsis-overflow;
         }
@@ -65,10 +65,10 @@
         .content {
             width: 100%;
             .description {
-                color: $dxc-darkgray;
+                color: $euca-darkgray;
             }
             .rule-description-label {
-                color: $dxc-darkgray;
+                color: $euca-darkgray;
             }
         }
     }
@@ -81,7 +81,7 @@
         .chosen-choices {
             li.search-field {
                 input.default {
-                    color: $dxc-lightgray;
+                    color: $euca-lightgray;
                     font-size: $euca-font-size;
                     font-family: $euca-text-font-family;
                     margin-left: 3px;
@@ -105,14 +105,14 @@
     label {
         position: relative;
         right: -1rem;
-        color: $dxc-darkgray;
+        color: $euca-darkgray;
         margin-top: 4px;
         cursor: default;
     }
     .value {
         word-break: break-all;
         line-height: 1rem;
-        color: $dxc-black;
+        color: $euca-black;
         &.breakword {
             word-break: normal;
             word-wrap: break-word;
@@ -123,14 +123,14 @@
     }
     .title {
         font-weight: bold;
-        color: $dxc-black;
-        border-bottom: 1px solid $dxc-lightgray;
+        color: $euca-black;
+        border-bottom: 1px solid $euca-lightgray;
         margin-top: 7px;
         margin-bottom: 0.25rem;
     }
     .section {
         padding: 0.5rem 0;
-        border-bottom: 1px solid $dxc-lightgray;
+        border-bottom: 1px solid $euca-lightgray;
         &:last-child {
             border-bottom: none;
         }

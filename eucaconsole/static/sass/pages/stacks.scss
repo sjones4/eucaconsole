@@ -5,19 +5,19 @@
 $stack-status-color-create-in-progress: lighten(green, 15%);
 $stack-status-color-create-complete: green;
 $stack-status-color-create-failed: darkred;
-$stack-status-color-rollback-in-progress: $dxc-lightgray;
-$stack-status-color-rollback-complete: $dxc-darkgray;
+$stack-status-color-rollback-in-progress: $euca-lightgray;
+$stack-status-color-rollback-complete: $euca-darkgray;
 $stack-status-color-rollback-failed: darkred;
-$stack-status-color-delete-in-progress: $dxc-lightgray;
-$stack-status-color-delete-complete: $dxc-darkgray;
+$stack-status-color-delete-in-progress: $euca-lightgray;
+$stack-status-color-delete-complete: $euca-darkgray;
 $stack-status-color-delete-failed: darkred;
 $stack-status-update-in-progress: lighten(green, 15%);
 $stack-status-update-complete-cleanup-in-progress: lighten(green, 15%);
 $stack-status-update-complete: green;
-$stack-status-update-rollback-in-progress: $dxc-lightgray;
+$stack-status-update-rollback-in-progress: $euca-lightgray;
 $stack-status-update-rollback-failed: darkred;
-$stack-status-update-rollback-complete-cleanup-in-progress: $dxc-lightgray;
-$stack-status-update-rollback-complete: $dxc-darkgray;
+$stack-status-update-rollback-complete-cleanup-in-progress: $euca-lightgray;
+$stack-status-update-rollback-complete: $euca-darkgray;
 
 // Stack status
 .status.create-in-progress { background-color: $stack-status-color-create-in-progress; }

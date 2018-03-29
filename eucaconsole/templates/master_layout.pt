@@ -99,10 +99,10 @@
     <footer>
         <div class="row">
             <div class="small-6 columns logo">
-                <a id="dxc-logo" href="http://dxc.technology/"></a>
+                <a id="euca-logo" href="http://github.com/Corymbia/eucalyptus/"></a>
             </div>
             <div class="small-6 columns copyright">
-                © 2017 <a href="http://dxc.technology/">DXC Technology</a>
+                © 2018 <a href="http://github.com/Corymbia/eucalyptus/">Eucalyptus Cloud</a>
             </div>
         </div>
         <form id="euca-logout-form" method="post" action="${request.route_path('logout')}">
