@@ -74,9 +74,9 @@ table.table.scaling-policies {
     @include panel-tile-mixin;
     &.policy .header .title {
         cursor: default;
-            color: $dxc-black;
+            color: $euca-black;
         &:hover {
-            color: $dxc-darkgray;
+            color: $euca-darkgray;
             text-decoration: underline; 
         }
     }
@@ -134,10 +134,10 @@ table.table.scaling-policies {
 $scaling-status-color-successful: green;
 $scaling-status-color-in-progress: lighten(green, 15%);
 $scaling-status-color-failed: darkred;
-$scaling-status-color-not-yet-in-service: $dxc-lightgray;
-$scaling-status-color-canceled: $dxc-darkgray;
-$scaling-status-color-waiting-for-launch: $dxc-lightgray;
-$scaling-status-color-waiting-for-terminate: $dxc-lightgray;
+$scaling-status-color-not-yet-in-service: $euca-lightgray;
+$scaling-status-color-canceled: $euca-darkgray;
+$scaling-status-color-waiting-for-launch: $euca-lightgray;
+$scaling-status-color-waiting-for-terminate: $euca-lightgray;
 
 // Scaling group history status
 .status.Successful { background-color: $scaling-status-color-successful; }
