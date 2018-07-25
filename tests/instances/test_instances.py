@@ -29,8 +29,6 @@ Instances tests
 See http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/testing.html
 
 """
-import unittest
-
 import boto
 
 from moto import mock_ec2
@@ -54,30 +52,29 @@ from tests import BaseViewTestCase, BaseFormTestCase, Mock
 
 class MockInstanceMixin(object):
     @staticmethod
+    @mock_ec2
     def make_instance(image_id=None, **kwargs):
-        ec2_conn = boto.connect_ec2()
+        ec2_conn = boto.connect_ec2('us-east')
         if image_id is None:
             image_id = 'ami-1234abcd'
         reservation = ec2_conn.run_instances(image_id, **kwargs)
         return reservation.instances[0]
 
 
-@unittest.skip
-class InstancesViewTests(BaseViewTestCase):
-    """Instances landing page view"""
-
-    def test_instances_view_defaults(self):
-        request = testing.DummyRequest()
-        view = InstancesView(request)
-        self.assertEqual(view.prefix, '/instances')
-        self.assertEqual(view.initial_sort_key, '-launch_time')
-
-    def test_instances_landing_page(self):
-        request = testing.DummyRequest()
-        request.session['cloud_type'] = 'none'
-        request.session['role_access'] = True
-        view = InstancesView(request).instances_landing()
-        self.assertTrue('/instances/json' in view.get('json_items_endpoint'))
+#class InstancesViewTests(BaseViewTestCase):
+#    """Instances landing page view"""
+#    def test_instances_view_defaults(self):
+#        request = testing.DummyRequest()
+#        view = InstancesView(request)
+#        self.assertEqual(view.prefix, '/instances')
+#        self.assertEqual(view.initial_sort_key, '-launch_time')
+#
+#    def test_instances_landing_page(self):
+#        request = testing.DummyRequest()
+#        request.session['cloud_type'] = 'none'
+#        request.session['role_access'] = True
+#        view = InstancesView(request).instances_landing()
+#        self.assertTrue('/instances/json' in view.get('json_items_endpoint'))
 
 
 class InstancesSortableIPTestCase(BaseViewTestCase):
@@ -94,7 +91,6 @@ class InstancesSortableIPTestCase(BaseViewTestCase):
         self.assertEqual(sorted_ips[0], get_sortable_ip(self.ips[1]))
 
 
-@unittest.skip
 class InstanceViewTests(BaseViewTestCase):
     """Instance detail page view"""
 
@@ -235,23 +231,22 @@ class InstanceDetachVolumeFormTestCase(BaseFormTestCase):
         self.assertTrue(issubclass(self.form_class, BaseSecureForm))
 
 
-@unittest.skip
-class InstanceLaunchFormTestCase(BaseFormTestCase):
-    form_class = LaunchInstanceForm
-    request = testing.DummyRequest()
-    request.session['region'] = 'dummy'
-
-    def setUp(self):
-        self.form = self.form_class(self.request)
-
-    def test_secure_form(self):
-        self.has_field('csrf_token')
-        self.assertTrue(issubclass(self.form_class, BaseSecureForm))
-
-    def test_required_fields(self):
-        self.assert_required('number')
-        self.assert_required('instance_type')
-        self.assert_required('securitygroup')
+#class InstanceLaunchFormTestCase(BaseFormTestCase):
+#    form_class = LaunchInstanceForm
+#    request = testing.DummyRequest()
+#    request.session['region'] = 'dummy'
+#
+#    def setUp(self):
+#        self.form = self.form_class(self.request)
+#
+#    def test_secure_form(self):
+#        self.has_field('csrf_token')
+#        self.assertTrue(issubclass(self.form_class, BaseSecureForm))
+#
+#    def test_required_fields(self):
+#        self.assert_required('number')
+#        self.assert_required('instance_type')
+#        self.assert_required('securitygroup')
 
 
 class InstanceCreateImageFormTestCase(BaseFormTestCase, BaseViewTestCase):
@@ -281,84 +276,72 @@ class InstanceCreateImageFormTestCase(BaseFormTestCase, BaseViewTestCase):
             pass
 
 
-@unittest.skip
-class InstanceLaunchFormTestCaseWithVPCEnabledOnEucalpytus(BaseFormTestCase):
-    form_class = LaunchInstanceForm
-    request = testing.DummyRequest()
-    request.session.update({
-        'cloud_type': 'euca',
-        'supported_platforms': ['VPC'],
-    })
-
-    def setUp(self):
-        self.form = self.form_class(self.request)
-
-    def test_launch_instance_form_vpc_network_choices_with_vpc_enabled_on_eucalyptus(self):
-        self.assertFalse(('None', _(u'No VPC')) in self.form.vpc_network.choices)
-
-
-@unittest.skip
-class InstanceLaunchFormTestCaseWithVPCDisabledOnEucalpytus(BaseFormTestCase):
-    form_class = LaunchInstanceForm
-    request = testing.DummyRequest()
-    request.session.update({
-        'cloud_type': 'euca',
-        'supported_platforms': [],
-    })
-
-    def setUp(self):
-        self.form = self.form_class(self.request)
-
-    def test_launch_instance_form_vpc_network_choices_with_vpc_disabled_on_eucalyptus(self):
-        self.assertTrue(('None', _(u'No VPC')) in self.form.vpc_network.choices)
+#class InstanceLaunchFormTestCaseWithVPCEnabledOnEucalpytus(BaseFormTestCase):
+#    form_class = LaunchInstanceForm
+#    request = testing.DummyRequest()
+#    request.session.update({
+#        'cloud_type': 'euca',
+#        'supported_platforms': ['VPC'],
+#    })
+#
+#    def setUp(self):
+#        self.form = self.form_class(self.request)
+#
+#    def test_launch_instance_form_vpc_network_choices_with_vpc_enabled_on_eucalyptus(self):
+#        self.assertFalse(('None', _(u'No VPC')) in self.form.vpc_network.choices)
 
 
-@unittest.skip
-class InstancesFiltersFormTestCaseOnAWS(BaseFormTestCase):
-    form_class = InstancesFiltersForm
-    request = testing.DummyRequest()
+#class InstanceLaunchFormTestCaseWithVPCDisabledOnEucalpytus(BaseFormTestCase):
+#    form_class = LaunchInstanceForm
+#    request = testing.DummyRequest()
+#    request.session.update({
+#        'cloud_type': 'euca',
+#        'supported_platforms': [],
+#    })
+#
+#    def setUp(self):
+#        self.form = self.form_class(self.request)
+#
+#    def test_launch_instance_form_vpc_network_choices_with_vpc_disabled_on_eucalyptus(self):
+#        self.assertTrue(('None', _(u'No VPC')) in self.form.vpc_network.choices)
 
-    def setUp(self):
-        self.form = self.form_class(self.request, cloud_type='aws')
 
-    def test_instances_filters_form_vpc_id_choices_on_aws(self):
-        self.assertTrue(('None', _(u'No VPC')) in self.form.vpc_id.choices)
+#class InstancesFiltersFormTestCaseOnAWS(BaseFormTestCase):
+#    form_class = InstancesFiltersForm
+#    request = testing.DummyRequest()
+#
+#    def setUp(self):
+#        self.form = self.form_class(self.request, cloud_type='aws')
+#
+#    def test_instances_filters_form_vpc_id_choices_on_aws(self):
+#        self.assertTrue(('None', _(u'No VPC')) in self.form.vpc_id.choices)
 
 
 class InstanceMonitoringViewTestCase(BaseViewTestCase, MockInstanceMixin):
 
-    @mock_ec2
     def test_instance_monitoring_view_duration_choices(self):
         request = testing.DummyRequest()
-        self.setup_session(request)
         instance = self.make_instance()
-        request.matchdict['id'] = instance.id
-        request.is_xhr = True
-        view = InstanceMonitoringView(request).instance_monitoring()
+        view = InstanceMonitoringView(request, instance=instance).instance_monitoring()
         duration_choices = dict(view.get('duration_choices'))
         for choice in [3600, 10800, 21600, 43200, 86400, 259200, 604800, 1209600]:
             assert choice in duration_choices
 
-    @mock_ec2
-    @unittest.skip('Moto does not support obtaining select instance attributes')
     def test_instance_monitoring_state_on_aws(self):
-        request = self.create_request()
-        self.setup_session(request)
+        session = {'cloud_type': 'aws'}
+        request = self.create_request(session=session)
         instance = self.make_instance()
-        request.matchdict['id'] = instance.id
-        view = InstanceView(request).instance_view()
+        view = InstanceView(request, instance=instance).instance_view()
         monitoring_state = view.get('instance_monitoring_state')
-        self.assertEqual(monitoring_state, u'Basic')
+        self.assertEqual(monitoring_state, u'Detailed')
 
-    @mock_ec2
     def test_instance_monitoring_tab_title_on_aws(self):
-        request = self.create_request()
-        self.setup_session(request)
+        session = {'cloud_type': 'aws'}
+        request = self.create_request(session=session)
         instance = self.make_instance()
-        request.matchdict['id'] = instance.id
-        view = InstanceMonitoringView(request).instance_monitoring()
+        view = InstanceMonitoringView(request, instance=instance).instance_monitoring()
         monitoring_tab_title = view.get('monitoring_tab_title')
-        self.assertEqual(monitoring_tab_title, u'Basic Monitoring')
+        self.assertEqual(monitoring_tab_title, u'Detailed Monitoring')
 
 
 class InstanceTypeChoicesTestCase(BaseViewTestCase):

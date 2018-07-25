@@ -36,13 +36,13 @@ $euca-extrasmall-breakpoint: 480px;
 // Colors
 $euca-validation-input-bgcolor: lighten(lightpink, 10%);
 
-$dxc-black: #000000;
-$dxc-white: #ffffff;
-$dxc-yellow: #ffed00;
-$dxc-blue: #00c9ff;
-$dxc-green: #64ff00;
-$dxc-darkgray: #666666;
-$dxc-lightgray: #d9d9d9;
+$euca-black: #000000;
+$euca-white: #ffffff;
+$euca-blue: #00c9ff;
+$euca-green: #99cc33;
+$euca-darkgray: #666666;
+$euca-lightgray: #d9d9d9;
+
 
 // Text
 $euca-text-font-family: 'Lato', Helvetica, Arial, sans-serif;
@@ -61,11 +61,11 @@ $euca-xl-font-size: 24px;
 $row-width: rem-calc(1040);
 
 // Colors
-$primary-color: $dxc-black;
+$primary-color: $euca-black;
 
 // Dropdown menus
 $f-dropdown-bg: white;
-$f-dropdown-triangle-color: $dxc-lightgray;
+$f-dropdown-triangle-color: $euca-lightgray;
 
 // Navigation bar settings ============
 // Breakpoint handling
@@ -82,12 +82,12 @@ $crumb-border-style: solid;
 $crumb-border-color: transparent;
 $crumb-radius: 0;
 $crumb-font-size: 1.1rem;
-$crumb-font-color: $dxc-darkgray;
+$crumb-font-color: $euca-darkgray;
 $crumb-font-family-current: $euca-text-font-family;
 $crumb-font-color-unavailable: #999;
 $crumb-font-transform: normal;
 $crumb-link-decor: underline;
-$crumb-slash-color: $dxc-darkgray;
+$crumb-slash-color: $euca-darkgray;
 $crumb-slash: "/";
 
 // Buttons
@@ -109,12 +109,12 @@ $tabs-content-margin-bottom: rem-calc(1) !default;
 
 // Tooltips
 $tooltip-bg: white;
-$tooltip-font-color: $dxc-darkgray;
+$tooltip-font-color: $euca-darkgray;
 $tooltip-padding: rem-calc(5);
 
 // Alarm status colors
 $alarm-status-color-alarm: darkred;
-$alarm-status-color-insufficient-data: $dxc-darkgray;
+$alarm-status-color-insufficient-data: $euca-darkgray;
 $alarm-status-color-ok: green;
 
 // Mixins
@@ -128,7 +128,7 @@ $alarm-status-color-ok: green;
 // Tiles within panels (e.g. instance_volumes.pt and volume_snapshots.pt page)
 @mixin panel-tile-mixin {
     background-color: white;
-    border: 1px solid $dxc-lightgray;
+    border: 1px solid $euca-lightgray;
     width: 190px; height: 160px;
     .footer {
         height: 24px;
@@ -137,29 +137,29 @@ $alarm-status-color-ok: green;
 }
 
 @mixin button-shadow-mixin {
-    box-shadow: 1px 1px 5px 0 $dxc-lightgray;
+    box-shadow: 1px 1px 5px 0 $euca-lightgray;
 }
 
 @mixin disabled-button-mixin {
-    background-color: $dxc-lightgray;
-    color: $dxc-darkgray;
+    background-color: $euca-lightgray;
+    color: $euca-darkgray;
     cursor: default;
     &:hover {
         cursor: default;
         pointer-events: none;
-        background-color: $dxc-lightgray;
+        background-color: $euca-lightgray;
         text-decoration: none;
         border: none;
         outline: none;
         box-shadow: none;
-        color: $dxc-darkgray;
+        color: $euca-darkgray;
     }
 }
 
 
 @mixin primary-disabled-button-mixin {
     @include disabled-button-mixin;
-    border-color: $dxc-lightgray;
+    border-color: $euca-lightgray;
     &:hover {
         border: none;
     }
@@ -168,7 +168,7 @@ $alarm-status-color-ok: green;
 @mixin disabled-list-item-mixin {
     cursor: default;
     a {
-        color: $dxc-lightgray;
+        color: $euca-lightgray;
         pointer-events: none;
     }
     &:hover {
@@ -177,15 +177,15 @@ $alarm-status-color-ok: green;
 }
 
 @mixin dropdown-shadow-mixin {
-    border-color: $dxc-lightgray;
-    box-shadow: 2px 2px 5px $dxc-lightgray;
+    border-color: $euca-lightgray;
+    box-shadow: 2px 2px 5px $euca-lightgray;
 }
 
 @mixin helptext-icon-position-mixin {
     .helptext-icon {
         position: relative;
         left: -1rem;
-        color: $dxc-darkgray;
+        color: $euca-darkgray;
     }
 }
 
@@ -202,19 +202,19 @@ $alarm-status-color-ok: green;
 
 @mixin table-styles-mixin {
     border: none;
-    border-top: 1px solid $dxc-black;
-    border-bottom: 1px solid $dxc-black;
+    border-top: 1px solid $euca-black;
+    border-bottom: 1px solid $euca-black;
     thead tr {
-        background-color: $dxc-black;
+        background-color: $euca-black;
         th {
             // Note: Do not use shorthand padding rules here since we need to override Foundation styles
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
             padding-left: 6px;
             padding-right: 6px;
-            border-bottom: 1px solid $dxc-lightgray;
+            border-bottom: 1px solid $euca-lightgray;
             vertical-align: top;
-            color: $dxc-white;
+            color: $euca-white;
             font-family: $euca-header-font-family;
             text-transform: uppercase;
             &.actions {
@@ -229,7 +229,7 @@ $alarm-status-color-ok: green;
         }
     }
     tr {
-        border-bottom: 1px solid $dxc-lightgray;
+        border-bottom: 1px solid $euca-lightgray;
         &:last-child {
             border-bottom: none;
         }
@@ -258,18 +258,18 @@ $alarm-status-color-ok: green;
     .item-list {
         margin-bottom: 6px;
         .item {
-            color: $dxc-darkgray;
+            color: $euca-darkgray;
             font-family: $euca-text-font-family;
-            border: 1px solid $dxc-darkgray;
-            background-color: $dxc-lightgray;
+            border: 1px solid $euca-darkgray;
+            background-color: $euca-lightgray;
             margin-right: 8px;
             padding-right: 12px;
             a {
-                color: $dxc-darkgray;
+                color: $euca-darkgray;
                 position: relative;
                 top: 1px; left: 4px;
                 &:hover {
-                    color: $dxc-black;
+                    color: $euca-black;
                     text-decoration: none;
                 }
             }
@@ -289,23 +289,23 @@ $alarm-status-color-ok: green;
         padding-left: 0;
         a {
             padding: 10px 0 4px 0;
-            color: $dxc-darkgray;
+            color: $euca-darkgray;
             background-color: transparent;
             font-family: $euca-header-font-family;
             font-weight: bold;
             text-transform: uppercase;
             &:hover {
-                border-bottom: 2px solid $dxc-darkgray;
+                border-bottom: 2px solid $euca-darkgray;
                 background-color: transparent;
                 text-decoration: none;
             }
         }
         &.active {
             a {
-                color: $dxc-black;
+                color: $euca-black;
                 font-family: $euca-header-font-family;
                 background-color: transparent;
-                border-bottom: 2px solid $dxc-black;
+                border-bottom: 2px solid $euca-black;
             }
         }
     }
@@ -321,40 +321,40 @@ $alarm-status-color-ok: green;
     padding-right: 1rem;
     padding-left: 0;
     a {  // Visited tabs
-        color: $dxc-darkgray;
+        color: $euca-darkgray;
         font-family: $euca-header-font-family;
         text-transform: uppercase;
         background-color: transparent;
         &:hover {
-            color: $dxc-darkgray;
-            border-bottom: 2px solid $dxc-darkgray;
+            color: $euca-darkgray;
+            border-bottom: 2px solid $euca-darkgray;
         }
         box-shadow: none;
         white-space: nowrap;
         padding: 8px 0 6px 0;
         .cir {
-            background-color: $dxc-darkgray;
+            background-color: $euca-darkgray;
         }
     }
     &.active {  // Active tab
         a {
-            color: $dxc-black;
+            color: $euca-black;
             font-family: $euca-header-font-family;
             background-color: transparent;
-            border-bottom: 2px solid $dxc-black;
+            border-bottom: 2px solid $euca-black;
         }
         .cir {
-            background-color: $dxc-black;
+            background-color: $euca-black;
         }
     }
     &.disabled {  // Unvisited tabs
-        color: $dxc-lightgray;
+        color: $euca-lightgray;
         font-family: $euca-header-font-family;
         text-transform: uppercase;
         padding: 8px 1rem;
         .cir {
             margin-right: 8px;
-            background-color: $dxc-lightgray;
+            background-color: $euca-lightgray;
         }
     }
     .cir {
@@ -367,7 +367,7 @@ $alarm-status-color-ok: green;
         padding: 0 0 0 0;
         text-align: center;
         vertical-align: middle;
-        background-color: $dxc-lightgray;
+        background-color: $euca-lightgray;
         color: white;
         margin-right: 4px;
     }

@@ -32,88 +32,61 @@ describe("SnapshotPage", function() {
 
     describe("Initial Values Test", function() {
 
-        it("should set initial value of transitionalStates[0] to 'pending'", function() {
+        it("Initial value of transitionalStates[0] is pending", function() {
             expect(scope.transitionalStates[0]).toEqual('pending');
         });
 
-        it("should set initial value of transitionalStates[1] to 'deleting'", function() {
+        it("Initial value of transitionalStates[1] is deleting", function() {
             expect(scope.transitionalStates[1]).toEqual('deleting');
         });
 
-        it("should set initial value of snapshotStatus to empty string", function() {
+        it("Initial value of snapshotStatus is empty", function() {
             expect(scope.snapshotStatus).toEqual('');
         });
 
-        it("should set initial value of snapshotProgress to empty string", function() {
+        it("Initial value of snapshotProgress is empty", function() {
             expect(scope.snapshotProgress).toEqual('');
         });
 
-        it("should set initial value of isNotValid to true", function() {
-            expect(scope.isNotValid).toBe(true);
+        it("Initial value of isNotValid is true", function() {
+            expect(scope.isNotValid).toBeTruthy();
         });
 
-        it("should set initial value of isNotChanged to true", function() {
-            expect(scope.isNotChanged).toBe(true);
+        it("Initial value of isNotChanged is true", function() {
+            expect(scope.isNotChanged).toBeTruthy();
         });
 
-        it("should set initial value of isSubmitted to false", function() {
-            expect(scope.isSubmitted).toBe(false);
+        it("Initial value of isSubmitted is false", function() {
+            expect(scope.isSubmitted).not.toBeTruthy();
         });
 
-        it("should set initial value of isUpdating to false", function() {
-            expect(scope.isUpdating).toBe(false);
+        it("Initial value of isUpdating is false", function() {
+            expect(scope.isUpdating).not.toBeTruthy();
         });
 
-        it("should set initial value of volumeID to empty string", function() {
+        it("Initial value of volumeID is empty", function() {
             expect(scope.volumeID).toEqual('');
         });
 
-        it("should set initial value of imagesURL to empty string", function() {
+        it("Initial value of imagesURL is empty", function() {
             expect(scope.imagesURL).toEqual('');
         });
 
-        it("should set initial value of images to undefined", function() {
+        it("Initial value of images is undefined", function() {
             expect(scope.images).toEqual(undefined);
         });
 
-        it("should set initial value of pendingModalID to empty string", function() {
+        it("Initial value of pendingModalID is empty", function() {
             expect(scope.pendingModalID).toEqual('');
         });
     });
 
-    describe("#initController", function() {
+    describe("Function initController() Test", function() {
 
-        it("should call getSnapshotState() when initController() is called and snapshotStatusEndpoint is set", function() {
+        it("Should call getSnapshotState() when initController() is called and snapshotStatusEndpoint is set", function() {
             spyOn(scope, 'getSnapshotState');
             scope.initController('{"snapshot_status_json_url": "/snapshots/sn-12345678/status/json"}');
             expect(scope.getSnapshotState).toHaveBeenCalled();
         });
     });
-
-    describe("#inProgress", function() {
-
-        it("should set inProgress to true when snapshot is 25% complete", function () {
-            expect(scope.inProgress('25%')).toBe(true);
-        });
-
-        it("should set inProgress to false when snapshot is 100% complete", function () {
-            expect(scope.inProgress('100%')).toBe(false);
-        });
-    });
-
-    describe("#isTransitional", function() {
-
-        it("should set isTransitional to true when in 'pending' state", function () {
-            expect(scope.isTransitional('pending')).toBe(true);
-        });
-
-        it("should set isTransitional to true when in 'deleting' state", function () {
-            expect(scope.isTransitional('deleting')).toBe(true);
-        });
-
-        it("should set isTransitional to false when in 'completed' state", function () {
-            expect(scope.isTransitional('completed')).toBe(false);
-        });
-    });
-
 });

@@ -6,5 +6,3 @@
 .invalid-rule-type-label { color: #666666; }
 
 .invalid-rule { padding-bottom: 8px; }
-
-[data-abide] .ipaddress.error small.error { background-color: transparent; color: darkred; font-weight: bold; }

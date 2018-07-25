@@ -200,9 +200,11 @@
                     </div>
                     <hr />
                     ${panel('bdmapping_editor', image=image, read_only=True)}
-                    <div ng-cloak="">
-                        <tag-editor ng-model="tags" tal:content="tags | structure"></tag-editor>
-                    </div>
+                    <tag-editor
+                            ng-model="tags"
+                            template="${request.route_path('render_template', subpath='tag-editor/tag-editor')}"
+                            tal:content="tags | structure">
+                    </tag-editor>
                     <hr/>
                     <div>
                         <button type="submit" class="button" id="save-changes-btn" ng-disabled="isNotChanged">

@@ -32,57 +32,51 @@ describe("VolumeSnapshots", function() {
 
     describe("Initial Values Test", function() {
 
-        it("should set initial value of loading to false", function() {
-            expect(scope.loading).toBe(false);
+        it("Initial value of loading is false", function() {
+            expect(scope.loading).not.toBeTruthy();
         });
 
-        it("should set initial value of jsonEndpoint to empty string", function() {
+        it("Initial value of jsonEndpoint is empty", function() {
             expect(scope.jsonEndpoint).toEqual('');
         });
 
-        it("should set initial value of initialLoading to true", function() {
-            expect(scope.initialLoading).toBe(true);
+        it("Initial value of initialLoading is true", function() {
+            expect(scope.initialLoading).toBeTruthy();
         });
 
-        it("should set initial value of snapshotID to empty string", function() {
+        it("Initial value of snapshotID is empty", function() {
             expect(scope.snapshotID).toEqual('');
         });
 
-        it("should set initial value of snapshotName to empty string", function() {
+        it("Initial value of snapshotName is empty", function() {
             expect(scope.snapshotName).toEqual('');
         });
 
-        it("should set initial value of imagesURL to empty string", function() {
+        it("Initial value of imagesURL is empty", function() {
             expect(scope.imagesURL).toEqual('');
         });
 
-        it("should set initial value of images to undefined", function() {
+        it("Initial value of images is undefined", function() {
             expect(scope.images).toEqual(undefined);
         });
     });
 
-    describe("#initController", function() {
+    describe("Function initController() Test", function() {
 
-        it("should set jsonEndpoint when initController() is called", function() {
+        it("Should set jsonEndpoint when initController() is called", function() {
             scope.initController('a', 'b');
             expect(scope.jsonEndpoint).toEqual('a');
         });
 
-        it("should set imagesURL when initController() is called", function() {
+        it("Should set imagesURL when initController() is called", function() {
             scope.initController('a', 'b');
             expect(scope.imagesURL).toEqual('b');
         });
 
-        it("should call getVolumeSnapshots() when initController() is called", function() {
+        it("Should call getVolumeSnapshots() when initController() is called", function() {
             spyOn(scope, 'getVolumeSnapshots');
             scope.initController('a', 'b');
             expect(scope.getVolumeSnapshots).toHaveBeenCalled();
-        });
-
-        it("should call setFocus() when initController() is called", function() {
-            spyOn(scope, 'setFocus');
-            scope.initController('a', 'b');
-            expect(scope.setFocus).toHaveBeenCalled();
         });
     });
 });

@@ -6,7 +6,7 @@
  *
  */
 
-describe("InstanceCreateEBSImage", function() {
+describe("InstanceCreateImage", function() {
 
     beforeEach(angular.mock.module('InstanceCreateImage'));
 
@@ -32,25 +32,25 @@ describe("InstanceCreateEBSImage", function() {
 
     describe("Initial Values Test", function() {
 
-        it("should set initial value of expanded to false", function() {
-            expect(scope.expanded).toBe(false);
+        it("Initial value of expanded is false", function() {
+            expect(scope.expanded).not.toBeTruthy();
         });
 
-        it("should set initial value of name to empty string", function() {
+        it("Initial value of name is empty", function() {
             expect(scope.name).toEqual('');
         });
 
-        it("should set initial value of isNotValid to true", function() {
-            expect(scope.isNotValid).toBe(true);
+        it("Initial value of isNotValid is true", function() {
+            expect(scope.isNotValid).toBeTruthy();
         });
     });
 
-    describe("#checkRequiredInput", function() {
+    describe("Function checkRequiredInput() Test", function() {
 
-        it("should set isNotValid to true if name is empty", function() {
+        it("Should invalid input if name is empty", function() {
             scope.name = '';
             scope.checkRequiredInput();
-            expect(scope.isNotValid).toBe(true);
+            expect(scope.isNotValid).toBeTruthy();
         });
     });
 });

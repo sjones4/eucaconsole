@@ -35,6 +35,7 @@ import pylibmc
 import sys
 import os
 
+from defusedxml import ElementTree
 from markupsafe import escape
 from wtforms import StringField
 from wtforms.ext.csrf import SecureForm
@@ -44,9 +45,9 @@ from boto.exception import BotoServerError
 
 from ..caches import extra_long_term
 from ..caches import invalidate_cache
+from ..constants.elbs import ELB_PREDEFINED_SECURITY_POLICY_NAME_PREFIX
 from ..constants.instances import AWS_INSTANCE_TYPE_CHOICES
 from ..i18n import _
-from ..models.policy import Policy
 
 
 BLANK_CHOICE = ('', _(u'Select...'))
@@ -277,16 +278,6 @@ class ChoicesManager(object):
             ret.append(('none', _(u'None')))
         return ret
 
-    def elastic_ip_allocation_ids(self):
-        allocation_id_choices = []
-        elastic_ips = self.conn.get_all_addresses(filters={'domain': 'vpc'})
-        for eip in elastic_ips:
-            if eip.association_id is None:
-                value = eip.allocation_id
-                label = '{0} ({1})'.format(eip.allocation_id, eip.public_ip)
-                allocation_id_choices.append((value, label))
-        return sorted(set(allocation_id_choices))
-
     def kernels(self, kernel_images=None, image=None):
         """Get kernel id choices"""
         choices = [('', _(u'Use default from image'))]
@@ -377,9 +368,19 @@ class ChoicesManager(object):
         if add_blank:
             choices.append(BLANK_CHOICE)
         if self.conn is not None:
-            choices = self.conn.get_list('DescribeLoadBalancerPolicies', {}, [('member', Policy)])
+            xml_prefix = '{http://elasticloadbalancing.amazonaws.com/doc/2012-12-01/}'
+            resp = self.conn.make_request('DescribeLoadBalancerPolicies')
+            root = ElementTree.fromstring(resp.read())
+            policy_descriptions = root.find('.//{0}PolicyDescriptions'.format(xml_prefix))
+            policies = policy_descriptions.getchildren() if policy_descriptions is not None else []
+            for policy in policies:
+                policy_type = policy.find('.//{0}PolicyTypeName'.format(xml_prefix))
+                if policy_type is not None and policy_type.text == 'SSLNegotiationPolicyType':
+                    policy_name = policy.find('.//{0}PolicyName'.format(xml_prefix)).text
+                    if policy_name.startswith(ELB_PREDEFINED_SECURITY_POLICY_NAME_PREFIX):
+                        choices.append((policy_name, policy_name))
         if choices:
-            choices = reversed(sorted(set([(choice.policy_name, choice.policy_name) for choice in choices])))
+            choices = reversed(sorted(set(choices)))
         return list(choices)
 
     # IAM options
@@ -460,53 +461,6 @@ class ChoicesManager(object):
                 choices.append((vpc.id, subnet_string))
             else:
                 choices.append((vpc.id, vpc.cidr_block))
-        return sorted(set(choices))
-
-    def vpc_route_tables(self, vpc=None, route_tables=None, add_blank=True, escapebraces=True):
-        from ..views import TaggedItemView
-        choices = []
-        if add_blank:
-            # NOTE: Do not mark the 'None' value for i18n
-            choices = [('None', _(u'None (use main route table for VPC)'))]
-        filters = {}
-        if vpc is not None:
-            filters.update({
-                'vpc-id': vpc.id
-            })
-        if self.conn is not None:
-            route_tables = route_tables or self.conn.get_all_route_tables(filters=filters)
-            for route_table in route_tables:
-                route_table_name = TaggedItemView.get_display_name(route_table, escapebraces=escapebraces)
-                choices.append((route_table.id, route_table_name))
-        return sorted(set(choices))
-
-    def vpc_network_acls(self, vpc_id=None, network_acls=None, escapebraces=True):
-        from ..views import TaggedItemView
-        choices = [('', _("None (use VPC's default network ACL)"))]
-        filters = {}
-        if vpc_id is not None:
-            filters.update({
-                'vpc-id': vpc_id
-            })
-        if self.conn is not None:
-            network_acls = network_acls or self.conn.get_all_network_acls(filters=filters)
-            for network_acl in network_acls:
-                network_acl_name = TaggedItemView.get_display_name(network_acl, escapebraces=escapebraces)
-                choices.append((network_acl.id, network_acl_name))
-        return sorted(set(choices))
-
-    def internet_gateways(self, add_blank=True, escapebraces=True, hide_attached=False):
-        from ..views import TaggedItemView
-        choices = []
-        if add_blank:
-            choices = [('None', _(u'None'))]
-        if self.conn is not None:
-            internet_gateways = self.conn.get_all_internet_gateways()
-            if hide_attached:
-                internet_gateways = [igw for igw in internet_gateways if len(igw.attachments) == 0]
-            for igw in internet_gateways:
-                igw_name = TaggedItemView.get_display_name(igw, escapebraces=escapebraces)
-                choices.append((igw.id, igw_name))
         return sorted(set(choices))
 
 

@@ -1,8 +1,8 @@
 angular.module('AlarmDetailPage', [
     'AlarmsComponents', 'EucaChosenModule', 'ChartAPIModule', 'ChartServiceModule',
-    'AlarmServiceModule', 'AlarmActionsModule', 'ModalModule', 'CreateAlarmModal'
+    'AlarmServiceModule', 'AlarmActionsModule', 'ModalModule', 'CreateAlarmModal', 'EucaRoutes'
 ])
-.directive('alarmDetail', [function () {
+.directive('alarmDetail', ['eucaRoutes', function (eucaRoutes) {
     return {
         restrict: 'A',
         compile: function (tElement, tAttrs) {
@@ -25,7 +25,9 @@ angular.module('AlarmDetailPage', [
                         scope.alarm.dimensions = '';
                     }
 
-                    scope.redirectPath = '/alarms';
+                    eucaRoutes.getRouteDeferred('cloudwatch_alarms').then(function (path) {
+                        scope.redirectPath = path;
+                    });
 
                     scope.$watchCollection('alarm.actions', function () {
                         scope.collateActions();

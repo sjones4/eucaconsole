@@ -29,6 +29,9 @@ import string
 from random import choice
 
 from pyramid.settings import asbool
+from pyramid.httpexceptions import HTTPSeeOther
+
+from beaker.exceptions import BeakerException
 
 
 def setup_tweens(config, settings):
@@ -37,6 +40,7 @@ def setup_tweens(config, settings):
 
     config.add_tween('eucaconsole.tweens.https_tween_factory')
     config.add_tween('eucaconsole.tweens.request_id_tween_factory')
+    config.add_tween('eucaconsole.tweens.invalidate_session_cookie_tween_factory')
     config.add_tween('eucaconsole.tweens.CTHeadersTweenFactory')
     if asbool(settings.get('log.useractions', 'false')):
         config.add_tween('eucaconsole.tweens.usage_log_tween_factory')
@@ -75,6 +79,25 @@ def usage_log_tween_factory(handler, registry):
             logging.info('user-action: {0} {1}'.format(remote_addr, path))
         response = handler(request)
         return response
+    return tween
+
+
+def invalidate_session_cookie_tween_factory(handler, registry):
+    def tween(request):
+        try:
+            response = handler(request)
+            return response
+        except BeakerException as bex:
+            if bex.message == 'Invalid signature':
+                session_cookie = registry.settings.get('session.key', 'eucaconsole_session')
+                if session_cookie in request.cookies and \
+                        'invalidate-session' not in request.params:
+                    response = HTTPSeeOther(request.route_url("login",
+                                                              _query={'invalidate-session': '1'}))
+                    response.delete_cookie(session_cookie)
+                    logging.info('Invalid cookie (session key changed?), redirecting to login')
+                    return response
+            raise
     return tween
 
 

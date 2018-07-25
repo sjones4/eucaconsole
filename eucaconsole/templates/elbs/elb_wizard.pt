@@ -66,8 +66,12 @@
                                 </div>
                             </div>
                             <hr />
-                            <div ng-cloak="">
-                                <tag-editor ng-model="tags" tal:content="tags | structure"></tag-editor>
+                            <div>
+                                <tag-editor
+                                        ng-model="tags"
+                                        template="${request.route_path('render_template', subpath='tag-editor/tag-editor')}"
+                                        tal:content="tags | structure">
+                                </tag-editor>
                             </div>
                             <hr />
                             <div>

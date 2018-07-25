@@ -5,18 +5,20 @@
  * @requires AngularJS, jQuery
  *
  */
-angular.module('ScalingGroupsServiceModule', [])
-.factory('ScalingGroupsService', ['$http', '$q', '$interpolate', function ($http, $q, $interpolate) {
+angular.module('ScalingGroupsServiceModule', ['EucaRoutes'])
+.factory('ScalingGroupsService', ['$http', '$q', 'eucaRoutes', function ($http, $q, eucaRoutes) {
     return {
         getScalingGroups: function () {
-            return $http({
-                method: 'GET',
-                url: '/scalinggroup/names/json'
-            }).then(function success (response) {
-                var data = response.data || {
-                    scalinggroups: []
-                };
-                return data.scalinggroups;
+            return eucaRoutes.getRouteDeferred('scalinggroup_names_json').then(function (path) {
+                return $http({
+                    method: 'GET',
+                    url: path
+                }).then(function success (response) {
+                    var data = response.data || {
+                        scalinggroups: []
+                    };
+                    return data.scalinggroups;
+                });
             });
         },
 
@@ -26,14 +28,16 @@ angular.module('ScalingGroupsServiceModule', [])
                     reject('No id passed.');
                 });
             }
-            return $http({
-                method: 'GET',
-                url: $interpolate('/scalinggroup/{{id}}/policies/json')({id: id}),
-            }).then(function success (response) {
-                var data = response.data || {
-                    policies: {}
-                };
-                return data;
+            return eucaRoutes.getRouteDeferred('scalinggroup_policies_json', { id: id }).then(function (path) {
+                return $http({
+                    method: 'GET',
+                    url: path
+                }).then(function success (response) {
+                    var data = response.data || {
+                        policies: {}
+                    };
+                    return data;
+                });
             });
         }
     };

@@ -55,7 +55,7 @@ from ..forms.images import ImagesFiltersForm
 from ..forms.instances import (
     InstanceForm, AttachVolumeForm, DetachVolumeForm, LaunchInstanceForm, LaunchMoreInstancesForm,
     RebootInstanceForm, StartInstanceForm, StopInstanceForm, TerminateInstanceForm, InstanceCreateImageForm,
-    InstancesFiltersForm, InstanceTypeForm, InstanceMonitoringForm, InstanceTerminationProtectionForm,
+    InstancesFiltersForm, InstanceTypeForm, InstanceMonitoringForm,
     AssociateIpToInstanceForm, DisassociateIpFromInstanceForm)
 from ..forms import ChoicesManager, GenerateFileForm
 from ..forms.keypairs import KeyPairForm
@@ -164,10 +164,6 @@ class BaseInstanceView(BaseView):
             return instance.monitoring_state.capitalize()
         if self.cloud_type == 'aws':
             return _(u'Detailed') if instance.monitoring_state == 'enabled' else _(u'Basic')
-
-    def get_termination_protection_state(self, instance=None):
-        termination_protection_attr = self.conn.get_instance_attribute(instance.id, 'disableApiTermination')
-        return termination_protection_attr.get('disableApiTermination', False)
 
     def get_monitoring_tab_title(self, instance=None):
         if self.cloud_type == 'euca':
@@ -426,9 +422,6 @@ class InstancesJsonView(LandingPageView, BaseInstanceView):
         root_device_type_param = self.request.params.getall('root_device_type')
         if root_device_type_param:
             filters.update({'root-device-type': root_device_type_param})
-        subnet_param = self.request.params.get('subnet_id')
-        if subnet_param:
-            filters.update({'subnet-id': [subnet_param]})
         # Don't filter by these request params in Python, as they're included in the "filters" params sent to the CLC
         # Note: the choices are from attributes in InstancesFiltersForm
         ignore_params = [
@@ -478,7 +471,6 @@ class InstancesJsonView(LandingPageView, BaseInstanceView):
                 sortable_subnet_zone=sortable_subnet_zone,
                 key_name=instance.key_name,
                 exists_key=exists_key,
-                vpc_id=instance.vpc_id,
                 vpc_name=instance.vpc_name,
                 subnet_id=instance.subnet_id if instance.subnet_id else None,
                 vpc_subnet_display=vpc_subnet_display,
@@ -606,14 +598,14 @@ class InstancesJsonView(LandingPageView, BaseInstanceView):
 class InstanceView(TaggedItemView, BaseInstanceView):
     VIEW_TEMPLATE = '../templates/instances/instance_view.pt'
 
-    def __init__(self, request, **kwargs):
+    def __init__(self, request, instance=None, **kwargs):
         super(InstanceView, self).__init__(request, **kwargs)
         self.title_parts = [_(u'Instance'), request.matchdict.get('id'), _(u'General')]
         self.conn = self.get_connection()
         self.iam_conn = None
         if BaseView.has_role_access(request):
             self.iam_conn = self.get_connection(conn_type="iam")
-        self.instance = self.get_instance()
+        self.instance = instance or self.get_instance()
         self.image = self.get_image(self.instance)
         self.scaling_group = self.get_scaling_group()
         self.instance_form = InstanceForm(
@@ -622,8 +614,6 @@ class InstanceView(TaggedItemView, BaseInstanceView):
         self.stop_form = StopInstanceForm(self.request, formdata=self.request.params or None)
         self.reboot_form = RebootInstanceForm(self.request, formdata=self.request.params or None)
         self.terminate_form = TerminateInstanceForm(self.request, formdata=self.request.params or None)
-        self.termination_protection_form = InstanceTerminationProtectionForm(
-            self.request, formdata=self.request.params or None)
         self.associate_ip_form = AssociateIpToInstanceForm(
             self.request, conn=self.conn, instance=self.instance, formdata=self.request.params or None)
         self.disassociate_ip_form = DisassociateIpFromInstanceForm(self.request, formdata=self.request.params or None)
@@ -646,8 +636,6 @@ class InstanceView(TaggedItemView, BaseInstanceView):
         self.running_create = False
         if self.instance:
             self.running_create = True if self.instance.tags.get('ec_bundling') else False
-        protection_is_enabled = self.get_termination_protection_state(self.instance)
-        termination_protection_label = _('Enabled') if protection_is_enabled else _('Disabled')
 
         self.render_dict = dict(
             instance=self.instance,
@@ -655,9 +643,6 @@ class InstanceView(TaggedItemView, BaseInstanceView):
             instance_security_groups=self.security_group_list_string,
             instance_keypair=self.instance_keypair,
             instance_monitoring_state=self.get_monitoring_state(self.instance),
-            termination_protection_on=protection_is_enabled,
-            termination_protection_label=termination_protection_label,
-            termination_protection_form=self.termination_protection_form,
             monitoring_tab_title=self.get_monitoring_tab_title(self.instance),
             security_group_list=self.security_group_list,
             image=self.image,
@@ -671,7 +656,6 @@ class InstanceView(TaggedItemView, BaseInstanceView):
             disassociate_ip_form=self.disassociate_ip_form,
             has_elastic_ip=self.has_elastic_ip,
             vpc_subnet_display=self.get_vpc_subnet_display(self.instance.subnet_id) if self.instance else None,
-            tags=self.serialize_tags(self.instance.tags) if self.instance else [],
             role=self.role,
             running_create=self.running_create,
             controller_options_json=self.get_controller_options_json(),
@@ -717,13 +701,6 @@ class InstanceView(TaggedItemView, BaseInstanceView):
                 if self.request.params.get('start_later'):
                     self.log_request(_(u"Starting instance {0}").format(self.instance.id))
                     self.instance.start()
-
-                # Update security groups if modified for a VPC instance
-                if self.instance.vpc_id:
-                    selected_security_groups = self.request.params.getall('security_groups')
-                    existing_security_groups = [group.id for group in self.instance.groups]
-                    if sorted(selected_security_groups) != sorted(existing_security_groups):
-                        self.conn.modify_instance_attribute(self.instance.id, 'groupSet', selected_security_groups)
 
                 msg = _(u'Successfully modified instance')
                 self.request.session.flash(msg, queue=Notification.SUCCESS)
@@ -829,21 +806,6 @@ class InstanceView(TaggedItemView, BaseInstanceView):
                 else:
                     self.conn.disassociate_address(elastic_ip.public_ip)
                 msg = _(u'Successfully disassociated the IP from the instance.')
-                self.request.session.flash(msg, queue=Notification.SUCCESS)
-            return HTTPFound(location=self.location)
-        return self.render_dict
-
-    @view_config(route_name='instance_set_termination_protection', renderer=VIEW_TEMPLATE, request_method='POST')
-    def instance_set_termination_protection(self):
-        if self.termination_protection_form.validate():
-            with boto_error_handler(self.request, self.location):
-                protection_is_enabled = self.get_termination_protection_state(self.instance)
-                new_value = not protection_is_enabled
-                self.conn.modify_instance_attribute(self.instance.id, 'disableApiTermination', new_value)
-                if protection_is_enabled:
-                    msg = _('Successfully disabled instance termination protection.')
-                else:
-                    msg = _('Successfully enabled instance termination protection.')
                 self.request.session.flash(msg, queue=Notification.SUCCESS)
             return HTTPFound(location=self.location)
         return self.render_dict
@@ -1096,16 +1058,17 @@ class InstanceVolumesView(BaseInstanceView):
 class InstanceMonitoringView(BaseInstanceView):
     VIEW_TEMPLATE = '../templates/instances/instance_monitoring.pt'
 
-    def __init__(self, request):
+    def __init__(self, request, instance=None):
         super(InstanceMonitoringView, self).__init__(request)
         self.title_parts = [_(u'Instance'), request.matchdict.get('id'), _(u'Monitoring')]
+        self.cw_conn = self.get_connection(conn_type='cloudwatch')
         self.instance_id = self.request.matchdict.get('id')
         self.location = self.request.route_path('instance_monitoring', id=self.instance_id)
         with boto_error_handler(self.request):
             # Note: We're fetching reservations here since calling self.get_instance() in the context manager
             # will return a 500 error instead of invoking the session timeout handler
             reservations = self.conn.get_all_reservations(instance_ids=[self.instance_id]) if self.conn else []
-        self.instance = self.get_instance(instance_id=self.instance_id, reservations=reservations)
+        self.instance = instance or self.get_instance(instance_id=self.instance_id, reservations=reservations)
         self.instance_name = TaggedItemView.get_display_name(self.instance)
         self.monitoring_form = InstanceMonitoringForm(self.request, formdata=self.request.params or None)
         self.monitoring_enabled = self.instance.monitoring_state == 'enabled' if self.instance else False
@@ -1190,9 +1153,9 @@ class InstanceLaunchView(BaseInstanceView, BlockDeviceMappingItemView):
         self.generate_file_form = GenerateFileForm(self.request, formdata=self.request.params or None)
         self.owner_choices = self.get_owner_choices()
         controller_options_json = BaseView.escape_json(json.dumps({
-            'securitygroups_choices': self.list_options(self.launch_form.securitygroup.choices),
-            'keypair_choices': self.list_options(self.launch_form.keypair.choices),
-            'role_choices': self.list_options(self.launch_form.role.choices),
+            'securitygroups_choices': dict(self.launch_form.securitygroup.choices),
+            'keypair_choices': dict(self.launch_form.keypair.choices),
+            'role_choices': dict(self.launch_form.role.choices),
             'vpc_subnet_choices': self.get_vpc_subnets(),
             'default_vpc_network': self.get_default_vpc_network(),
             'securitygroups_json_endpoint': self.request.route_path('securitygroups_json'),
@@ -1213,10 +1176,6 @@ class InstanceLaunchView(BaseInstanceView, BlockDeviceMappingItemView):
             is_vpc_supported=self.is_vpc_supported,
         )
 
-    @staticmethod
-    def list_options(options):
-        return [dict(id=opt[0], label=opt[1]) for opt in options]
-
     @view_config(route_name='instance_create', renderer=TEMPLATE, request_method='GET')
     def instance_create(self):
         """Displays the Launch Instance wizard"""
@@ -1224,7 +1183,7 @@ class InstanceLaunchView(BaseInstanceView, BlockDeviceMappingItemView):
 
     @view_config(route_name='instance_launch', renderer=TEMPLATE, request_method='POST')
     def instance_launch(self):
-        """Handles the POST from the Launch instance wizard"""
+        """Handles the POST from the Launch instanced wizard"""
         if self.launch_form.validate():
             tags_json = self.request.params.get('tags')
             if self.image is None:
@@ -1253,7 +1212,6 @@ class InstanceLaunchView(BaseInstanceView, BlockDeviceMappingItemView):
             kernel_id = self.request.params.get('kernel_id') or None
             ramdisk_id = self.request.params.get('ramdisk_id') or None
             monitoring_enabled = self.request.params.get('monitoring_enabled') == 'y'
-            termination_protection = self.request.params.get('termination_protection') == 'y'
             private_addressing = self.request.params.get('private_addressing') == 'y'
             addressing_type = 'private' if private_addressing else 'public'
             if vpc_network is not None and self.cloud_type == 'euca':
@@ -1283,10 +1241,6 @@ class InstanceLaunchView(BaseInstanceView, BlockDeviceMappingItemView):
                     block_device_map=block_device_map,
                     instance_profile_arn=instance_profile.arn if instance_profile else None,
                 )
-                if termination_protection:
-                    params.update(dict(
-                        disable_api_termination=True
-                    ))
                 if vpc_network is not None:
                     network_interface = NetworkInterfaceSpecification(
                         subnet_id=vpc_subnet,
@@ -1317,8 +1271,7 @@ class InstanceLaunchView(BaseInstanceView, BlockDeviceMappingItemView):
                         instance.add_tag('Name', name)
                     if tags_json:
                         tags = json.loads(tags_json)
-                        tags_dict = TaggedItemView.normalize_tags(tags)
-                        for tagname, tagvalue in tags_dict.items():
+                        for tagname, tagvalue in tags.items():
                             instance.add_tag(tagname, tagvalue)
                 msg = _(u'Successfully sent launch instances request.  It may take a moment to launch instances ')
                 msg += ', '.join(new_instance_ids)
@@ -1429,7 +1382,6 @@ class InstanceLaunchMoreView(BaseInstanceView, BlockDeviceMappingItemView):
             kernel_id = self.request.params.get('kernel_id') or None
             ramdisk_id = self.request.params.get('ramdisk_id') or None
             monitoring_enabled = self.request.params.get('monitoring_enabled') == 'y'
-            termination_protection = self.request.params.get('termination_protection') == 'y'
             private_addressing = self.request.params.get('private_addressing') == 'y'
             addressing_type = 'private' if private_addressing else 'public'
             if vpc_network is not None and self.cloud_type == 'euca':
@@ -1457,10 +1409,6 @@ class InstanceLaunchMoreView(BaseInstanceView, BlockDeviceMappingItemView):
                     block_device_map=block_device_map,
                     instance_profile_arn=instance_profile_arn,
                 )
-                if termination_protection:
-                    params.update(dict(
-                        disable_api_termination=True
-                    ))
                 if vpc_network is not None:
                     network_interface = NetworkInterfaceSpecification(
                         subnet_id=vpc_subnet,
@@ -1636,8 +1584,7 @@ class InstanceCreateImageView(BaseInstanceView, BlockDeviceMappingItemView):
                     image_id = self.ec2_conn.create_image(
                         instance_id, name, description=description, no_reboot=no_reboot, block_device_mapping=bdm)
                     tags = json.loads(tags_json)
-                    tags_dict = TaggedItemView.normalize_tags(tags)
-                    self.ec2_conn.create_tags(image_id, tags_dict)
+                    self.ec2_conn.create_tags(image_id, tags)
                     msg = _(u'Successfully sent create image request.  It may take a few minutes to create the image.')
                     self.invalidate_images_cache()
                     self.request.session.flash(msg, queue=Notification.SUCCESS)

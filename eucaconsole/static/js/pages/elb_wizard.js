@@ -149,9 +149,9 @@ angular.module('ELBWizard', [
         $scope.pingPort = 80;
         $scope.pingPath = '/';
         $scope.responseTimeout = 5;
-        $scope.timeBetweenPings = '30';
-        $scope.failuresUntilUnhealthy = '2';
-        $scope.passesUntilHealthy = '2';
+        $scope.timeBetweenPings = 30;
+        $scope.failuresUntilUnhealthy = 2;
+        $scope.passesUntilHealthy = 2;
         $scope.showsCertificateTabDiv = false;
         $scope.certificateTab = 'SSL';
         $scope.certificateRadioButton = 'existing';
@@ -429,15 +429,18 @@ angular.module('ELBWizard', [
         $(document).on('opened.fndtn.reveal', '[data-reveal]', function () {
             var modal = $(this);
             var modalID = $(this).attr('id');
-            if (modalID.match(/terminate/) || modalID.match(/delete/) || modalID.match(/release/)) {
+            if( modalID.match(/terminate/)  || modalID.match(/delete/) || modalID.match(/release/) ){
                 var closeMark = modal.find('.close-reveal-modal');
                 if(!!closeMark){
                     closeMark.focus();
                 }
-            } else {
+            }else{
                 var inputElement = modal.find('input[type!=hidden]').get(0);
+                var modalButton = modal.find('button').get(0);
                 if (!!inputElement && inputElement.value === '') {
                     inputElement.focus();
+                } else if (!!modalButton) {
+                    modalButton.focus();
                 }
            }
         });

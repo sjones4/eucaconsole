@@ -126,9 +126,7 @@ class ImageBundlingMixin(BlockDeviceMappingItemView):
             fakeimage.root_device_type = 'instance-store'
             fakeimage.root_device_name = '/dev/sda'
             fakeimage.block_device_mapping = {}
-            tags = json.loads(metadata['tags'])
-            tags_dict = TaggedItemView.normalize_tags(tags)
-            fakeimage.tags = tags_dict
+            fakeimage.tags = json.loads(metadata['tags'])
             return fakeimage
 
     def cancel_bundling(self, instance):
@@ -430,7 +428,7 @@ class ImageView(TaggedItemView, ImageBundlingMixin):
         if self.image is not None:
             tags = self.serialize_tags(self.image.tags)
         else:
-            tags = '[]'
+            tags = '{}'
         # tags = BaseView.escape_json(json.dumps(tags))
 
         self.render_dict = dict(

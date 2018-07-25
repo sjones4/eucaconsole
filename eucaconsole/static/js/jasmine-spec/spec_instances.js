@@ -32,24 +32,20 @@ describe("InstancesPage", function() {
 
     describe("Initial Values Test", function() {
 
-        it("should set initial value of instanceID to empty string", function() {
+        it("Initial value of instanceID is empty", function() {
             expect(scope.instanceID).toEqual('');
         });
 
-        it("should set initial value of fileName to empty string", function() {
+        it("Initial value of fileName is empty", function() {
             expect(scope.fileName).toEqual('');
-        });
-
-        it("should set initial value of ipAddressList to empty array", function() {
-            expect(scope.ipAddressList).toEqual([]);
         });
     });
 
-    describe("#initController", function() {
+    describe("Function initController() Test", function() {
 
-        it("should call initChosenSelectors() when initController() is called", function() {
+        it("Should call initChosenSelectors() when initController() is called", function() {
             spyOn(scope, 'initChosenSelectors');
-            scope.initController('{"addresses_json_items_endpoint": ""}');
+            scope.initController('{}');
             expect(scope.initChosenSelectors).toHaveBeenCalled();
         });
     });

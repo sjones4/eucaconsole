@@ -7,11 +7,11 @@
  */
 
 // Launch Instance page includes the Tag Editor, the Image Picker, BDM editor, and security group rules editor
-angular.module('LaunchInstance', [
-    'TagEditorModule', 'BlockDeviceMappingEditor', 'ImagePicker', 'SecurityGroupRules', 'EucaConsoleUtils'])
+angular.module('LaunchInstance', ['TagEditor', 'BlockDeviceMappingEditor', 'ImagePicker', 'SecurityGroupRules', 'EucaConsoleUtils'])
     .controller('LaunchInstanceCtrl', function ($scope, $http, $timeout, eucaHandleError, eucaUnescapeJson) {
         $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         $scope.launchForm = $('#launch-instance-form');
+        $scope.tagsObject = {};
         $scope.imageID = '';
         $scope.imageName = '';
         $scope.imagePlatform = '';
@@ -24,9 +24,9 @@ angular.module('LaunchInstance', [
         $scope.instanceVPCName = '';
         $scope.subnetVPC = 'None';
         $scope.vpcSubnetList = {};
-        $scope.vpcSubnetChoices = [];
-        $scope.keyPair = undefined;
-        $scope.keyPairChoices = [];
+        $scope.vpcSubnetChoices = {};
+        $scope.keyPair = '';
+        $scope.keyPairChoices = {};
         $scope.newKeyPairName = '';
         $scope.keyPairModal = $('#create-keypair-modal');
         $scope.isLoadingKeyPair = false;
@@ -39,13 +39,13 @@ angular.module('LaunchInstance', [
         $scope.selectedGroupRules = {};
         $scope.securityGroupModal = $('#create-securitygroup-modal');
         $scope.securityGroupForm = $('#create-securitygroup-form');
-        $scope.securityGroupChoices = [];
+        $scope.securityGroupChoices = {};
         $scope.securityGroupChoicesFullName = {};
         $scope.isRuleExpanded = {};
         $scope.newSecurityGroupName = '';
         $scope.isLoadingSecurityGroup = false;
         $scope.isSecurityGroupsInitialValuesSet = false;
-        $scope.role = undefined;
+        $scope.role = '';
         $scope.roleList = [];
         $scope.currentStepIndex = 1;
         $scope.step1Invalid = true;
@@ -61,11 +61,9 @@ angular.module('LaunchInstance', [
         $scope.initController = function (optionsJson) {
             var options = JSON.parse(eucaUnescapeJson(optionsJson));
             $scope.keyPairChoices = options.keypair_choices;
-            $scope.keyPair = $scope.keyPairChoices[0];
             $scope.securityGroupChoices = options.securitygroups_choices;
             $scope.vpcSubnetList = options.vpc_subnet_choices;
             $scope.roleList = options.role_choices;
-            $scope.role = $scope.roleList[0];
             $scope.instanceVPC = options.default_vpc_network;
             $scope.securityGroupVPC = options.default_vpc_network;
             $scope.securityGroupJsonEndpoint = options.securitygroups_json_endpoint;
@@ -75,6 +73,7 @@ angular.module('LaunchInstance', [
             $scope.getAllSecurityGroupsRules();
             $scope.preventFormSubmitOnEnter();
             $scope.initChosenSelectors();
+            $scope.watchTags();
             $scope.watchBdMapping();
             $scope.focusEnterImageID();
             $scope.setWatcher();
@@ -109,12 +108,10 @@ angular.module('LaunchInstance', [
                 $scope.securityGroupVPC = lastVPC;
             }
             var lastKeyPair = Modernizr.localstorage && localStorage.getItem('lastkeypair_inst');
-            if (lastKeyPair !== null) {
-                var foundKeyPair = $scope.keyPairChoices.find(function(choice) { return choice.id == lastKeyPair; });
-                if (foundKeyPair !== undefined) {
-                    $scope.keyPair = foundKeyPair;
-                }
+            if (lastKeyPair !== null && $scope.keyPairChoices[lastKeyPair] !== undefined) {
+                $('#keypair').val(lastKeyPair);
             }
+            $scope.keyPair = $('#keypair').find(':selected').val();
             $scope.imageID = $scope.urlParams.image_id || '';
             if( $scope.imageID === '' ){
                 $scope.currentStepIndex = 1;
@@ -126,11 +123,6 @@ angular.module('LaunchInstance', [
                     document.getElementById('tabStep2').click();
                 });
             }
-            $scope.restoreSecurityGroupsInitialValues(); 
-            // Timeout is needed for chosen to react after Angular updates the options
-            $timeout(function(){
-                $('#securitygroup').trigger('chosen:updated');
-            }, 500);
         };
         $scope.restoreSecurityGroupsInitialValues = function () {
             if ($scope.isSecurityGroupsInitialValuesSet === true) {
@@ -140,9 +132,8 @@ angular.module('LaunchInstance', [
             if (lastSecGroup !== null) {
                 var lastSecGroupArray = lastSecGroup.split(",");
                 angular.forEach(lastSecGroupArray, function (sgroup) {
-                    var foundGroup = $scope.securityGroupChoices.find(function(choice) { return choice.id == sgroup; });
-                    if (foundGroup !== undefined) {
-                        $scope.securityGroups.push(foundGroup);
+                    if ($scope.securityGroupChoices[sgroup] !== undefined) {
+                        $scope.securityGroups.push(sgroup);
                         $scope.isSecurityGroupsInitialValuesSet = true;
                     }
                 });
@@ -151,11 +142,27 @@ angular.module('LaunchInstance', [
         $scope.saveOptions = function() {
             if (Modernizr.localstorage) {
                 localStorage.setItem('lastvpc_inst', $scope.instanceVPC);
-                localStorage.setItem('lastkeypair_inst', $scope.keyPair.id);
-                localStorage.setItem('lastsecgroup_inst', $scope.securityGroups.map(function(val, idx) {
-                        return val.id;
-                    }, []));
+                localStorage.setItem('lastkeypair_inst', $('#keypair').find(':selected').val());
+                localStorage.setItem('lastsecgroup_inst', $scope.securityGroups);
             }
+        };
+        $scope.updateTagsPreview = function () {
+            // Need timeout to give the tags time to capture in hidden textarea
+            $timeout(function() {
+                var tagsTextarea = $('textarea#tags'),
+                    tagsJson = tagsTextarea.val(),
+                    removeButtons = $('.circle.remove');
+                removeButtons.on('click', function () {
+                    $scope.updateTagsPreview();
+                });
+                $scope.tagsObject = JSON.parse(tagsJson);
+                $scope.tagsLength = Object.keys($scope.tagsObject).length;
+            }, 300);
+        };
+        $scope.watchTags = function () {
+            $scope.$on('tagUpdate', function () {
+                $scope.updateTagsPreview();
+            });
         };
         $scope.watchBdMapping = function () {
             $scope.$on('bdMappingChange', function (evt, args) {
@@ -234,14 +241,10 @@ angular.module('LaunchInstance', [
             $scope.$watch('securityGroupVPC', function () {
                 $scope.$broadcast('updateVPC', $scope.securityGroupVPC);
             });
-
-            $scope.$watch('securityGroupCollection', function (newVal, oldVal) {
-                if (newVal === oldVal) return;
+            $scope.$watch('securityGroupCollection', function () {
                 $scope.updateSecurityGroupChoices();
             });
-
-            $scope.$watch('instanceVPC', function (newVal, oldVal) {
-                if (newVal === oldVal) return;
+            $scope.$watch('instanceVPC', function () {
                 $scope.getInstanceVPCName($scope.instanceVPC);
                 $scope.getAllSecurityGroups($scope.instanceVPC);
                 $scope.updateVPCSubnetChoices();
@@ -302,15 +305,18 @@ angular.module('LaunchInstance', [
                 var modal = $(this);
                 modal.find('div.error').removeClass('error');
                 var modalID = $(this).attr('id');
-                if (modalID.match(/terminate/) || modalID.match(/delete/) || modalID.match(/release/)) {
+                if( modalID.match(/terminate/)  || modalID.match(/delete/) || modalID.match(/release/) ){
                     var closeMark = modal.find('.close-reveal-modal');
                     if(!!closeMark){
                         closeMark.focus();
                     }
-                } else {
+                }else{
                     var inputElement = modal.find('input[type!=hidden]').get(0);
+                    var modalButton = modal.find('button').get(0);
                     if (!!inputElement && inputElement.value === '') {
                         inputElement.focus();
+                    } else if (!!modalButton) {
+                        modalButton.focus();
                     }
                 }
                 // Handle the angular and foundation conflict when setting the select options after the dialog opens
@@ -450,15 +456,10 @@ angular.module('LaunchInstance', [
                 url: createUrl,
                 data: formData
             }).success(function (oData) {
-                var newKeyPair;
                 $scope.isLoadingKeyPair = false;
                 // Add new key pair to choices and set it as selected
-                newKeyPair = {
-                    'id': $scope.newKeyPairName,
-                    'label': $scope.newKeyPairName
-                };
-                $scope.keyPairChoices.push(newKeyPair);
-                $scope.keyPair = newKeyPair;
+                $scope.keyPairChoices[$scope.newKeyPairName] = $scope.newKeyPairName;
+                $scope.keyPair = $scope.newKeyPairName;
                 Notify.success(oData.message);
                 // Download key pair file
                 $.generateFile({
@@ -492,7 +493,6 @@ angular.module('LaunchInstance', [
             }).success(function (oData) {
                 $scope.isLoadingSecurityGroup = false;
                 // Add new security group to choices and set it as selected
-                var newSecurityGroup;
                 var newSecurityGroupID = '';
                 if (oData.id) {
                     newSecurityGroupID = oData.id;
@@ -502,12 +502,8 @@ angular.module('LaunchInstance', [
                 if (securityGroupName.length > 45) {
                     securityGroupName = securityGroupName.substr(0, 45) + "...";
                 }
-                newSecurityGroup = {
-                    'id': newSecurityGroupID,
-                    'label': securityGroupName
-                };
-                $scope.securityGroupChoices.push(newSecurityGroup);
-                $scope.securityGroups.push(newSecurityGroup);
+                $scope.securityGroupChoices[newSecurityGroupID] = securityGroupName;
+                $scope.securityGroups.push(newSecurityGroupID);
                 var groupRulesObject = JSON.parse($('#rules').val());
                 var groupRulesEgressObject = JSON.parse($('#rules_egress').val());
                 var groupRulesObjectCombined = groupRulesObject.concat(groupRulesEgressObject); 
@@ -562,7 +558,7 @@ angular.module('LaunchInstance', [
             });
         };
         $scope.updateSecurityGroupChoices = function () {
-            $scope.securityGroupChoices = [];
+            $scope.securityGroupChoices = {};
             $scope.securityGroupChoicesFullName = {};
             if ($.isEmptyObject($scope.securityGroupCollection)) {
                 return;
@@ -574,11 +570,8 @@ angular.module('LaunchInstance', [
                 if (sGroup.name.length > 45) {
                     securityGroupName = sGroup.name.substr(0, 45) + "...";
                 }
-                $scope.securityGroupChoices.push({
-                    'id': sGroup.id,
-                    'label': securityGroupName
-                });
-            });
+                $scope.securityGroupChoices[sGroup.id] = securityGroupName;
+            }); 
             $scope.restoreSecurityGroupsInitialValues(); 
             // Timeout is needed for chosen to react after Angular updates the options
             $timeout(function(){
@@ -586,29 +579,31 @@ angular.module('LaunchInstance', [
             }, 500);
         };
         $scope.updateVPCSubnetChoices = function () {
-            $scope.vpcSubnetChoices = [];
+            $scope.vpcSubnetChoices = {};
             $scope.subnetVPC = '';
-            var emptySubnetChoice;
             angular.forEach($scope.vpcSubnetList, function(vpcSubnet){
-                var subnetChoice;
                 if (vpcSubnet.vpc_id === $scope.instanceVPC) {
-                    subnetChoice = {
-                        'id': vpcSubnet.id,
-                        'label': vpcSubnet.cidr_block + ' (' + vpcSubnet.id + ') | ' + vpcSubnet.availability_zone
-                    };
-                    $scope.vpcSubnetChoices.push(subnetChoice);
-                    if ($scope.subnetVPC === '') {
-                        $scope.subnetVPC = subnetChoice;
-                    }
+                    if ($scope.instanceZone === '') {
+                        $scope.vpcSubnetChoices[vpcSubnet.id] = 
+                            vpcSubnet.cidr_block + ' (' + vpcSubnet.id + ') | ' + 
+                            vpcSubnet.availability_zone;
+                        if ($scope.subnetVPC === '') {
+                            $scope.subnetVPC = vpcSubnet.id;
+                        }
+                    } else if ($scope.instanceZone !== '' && 
+                               vpcSubnet.availability_zone === $scope.instanceZone) {
+                        $scope.vpcSubnetChoices[vpcSubnet.id] = 
+                            vpcSubnet.cidr_block + ' (' + vpcSubnet.id + ') | ' + 
+                            vpcSubnet.availability_zone;
+                        if ($scope.subnetVPC === '') {
+                            $scope.subnetVPC = vpcSubnet.id;
+                        }
+                    } 
                 }
-            });
+            }); 
             if ($scope.subnetVPC === '') {
-                emptySubnetChoice = {
-                    'id': '',
-                    'label': $('#hidden_vpc_subnet_empty_option').text()
-                };
-                $scope.vpcSubnetChoices.push(emptySubnetChoice);
-                $scope.subnetVPC = emptySubnetChoice;
+                $scope.vpcSubnetChoices.None = $('#hidden_vpc_subnet_empty_option').text();
+                $scope.subnetVPC = 'None';
             }
         };
         $scope.updateSecurityGroupVPC = function () {

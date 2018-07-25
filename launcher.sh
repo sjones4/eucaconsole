@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash
 #
 # Copyright 2013-2017 Ent. Services Development Corporation LP
 #
@@ -26,4 +26,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # Fire up development server
-bin/eucaconsole -r -c console.ini
+pserve console.ini worker_class=eventlet --reload
+
+
+

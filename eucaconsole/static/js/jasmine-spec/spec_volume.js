@@ -32,59 +32,59 @@ describe("VolumePage", function() {
 
     describe("Initial Values Test", function() {
 
-        it("should set initial value of transitionalStates[0] to 'creating'", function() {
+        it("Initial value of transitionalStates[0] is creating", function() {
             expect(scope.transitionalStates[0]).toEqual('creating');
         });
 
-        it("should set initial value of transitionalStates[1] to 'deleting'", function() {
+        it("Initial value of transitionalStates[1] is deleting", function() {
             expect(scope.transitionalStates[1]).toEqual('deleting');
         });
 
-        it("should set initial value of transitionalStates[2] to 'attaching'", function() {
+        it("Initial value of transitionalStates[2] is attaching", function() {
             expect(scope.transitionalStates[2]).toEqual('attaching');
         });
 
-        it("should set initial value of transitionalStates[3] to 'detaching'", function() {
+        it("Initial value of transitionalStates[3] is detaching", function() {
             expect(scope.transitionalStates[3]).toEqual('detaching');
         });
 
-        it("should set initial value of volumeStatus to empty string", function() {
+        it("Initial value of volumeStatus is empty", function() {
             expect(scope.volumeStatus).toEqual('');
         });
 
-        it("should set initial value of volumeAttachStatus to empty string", function() {
+        it("Initial value of volumeAttachStatus is empty", function() {
             expect(scope.volumeAttachStatus).toEqual('');
         });
 
-        it("should set initial value of snapshotId to empty string", function() {
+        it("Initial value of snapshotId is empty", function() {
             expect(scope.snapshotId).toEqual('');
         });
 
-        it("should set initial value of instanceId to empty string", function() {
+        it("Initial value of instanceId is empty", function() {
             expect(scope.instanceId).toEqual('');
         });
 
-        it("should set initial value of isNotValid to true", function() {
-            expect(scope.isNotValid).toBe(true);
+        it("Initial value of isNotValid is true", function() {
+            expect(scope.isNotValid).toBeTruthy();
         });
 
-        it("should set initial value of isNotChanged to true", function() {
-            expect(scope.isNotChanged).toBe(true);
+        it("Initial value of isNotChanged is true", function() {
+            expect(scope.isNotChanged).toBeTruthy();
         });
 
-        it("should set initial value of isSubmitted to false", function() {
-            expect(scope.isSubmitted).toBe(false);
+        it("Initial value of isSubmitted is false", function() {
+            expect(scope.isSubmitted).not.toBeTruthy();
         });
 
-        it("should set initial value of isUpdating to false", function() {
-            expect(scope.isUpdating).toBe(false);
+        it("Initial value of isUpdating is false", function() {
+            expect(scope.isUpdating).not.toBeTruthy();
         });
 
-        it("should set initial value of fromSnapshot to false", function() {
-            expect(scope.fromSnapshot).toBe(false);
+        it("Initial value of fromSnapshot is false", function() {
+            expect(scope.fromSnapshot).not.toBeTruthy();
         });
 
-        it("should set initial value of volumeSize to 1", function() {
+        it("Initial value of volumeSize is 1", function() {
             expect(scope.volumeSize).toEqual(1);
         });
 
@@ -93,9 +93,9 @@ describe("VolumePage", function() {
         });
     });
 
-    describe("#initController", function() {
+    describe("Function initController() Test", function() {
 
-        it("should call initAvaliZoneChoice() when initController() is called", function() {
+        it("Should call initAvaliZoneChoice() when initController() is called", function() {
             spyOn(scope, 'initAvailZoneChoice');
             scope.initController('{}');
             expect(scope.initAvailZoneChoice).toHaveBeenCalled();

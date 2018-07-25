@@ -1,7 +1,6 @@
 <metal:block use-macro="main_template" i18n:domain="eucaconsole">
 
 <head metal:fill-slot="head_css">
-    <link rel="stylesheet" type="text/css" href="${request.static_path('eucaconsole:static/css/widgets/tag-editor.css')}" />
     <link rel="stylesheet" type="text/css" href="${request.static_path('eucaconsole:static/css/pages/volume.css')}" />
 </head>
 
@@ -95,7 +94,8 @@
         </div>
         <!--! modal dialogs -->
         <div id="snapshot-dialogs">
-            <div id="create-snapshot-modal" class="reveal-modal small" data-reveal="">
+            <div id="create-snapshot-modal" class="reveal-modal small" data-reveal=""
+                tal:define="snapshot_tags {};">
                 <h3 i18n:translate="">Create snapshot from volume</h3>
                 <p><span i18n:translate="">Add a snapshot for</span> <strong>${volume_name}</strong></p>
                 <form method="post" action="${request.route_path('volume_snapshot_create', id=volume.id)}"
@@ -104,9 +104,7 @@
                     ${panel('form_field', field=create_form.name, stack_label=True)}
                     ${panel('form_field', field=create_form.description, stack_label=True)}
                     <hr />
-                    <div ng-cloak="">
-                        <tag-editor ng-model="tags" show-name-tag="false">[]</tag-editor>
-                    </div>
+                    ${panel('tag_editor', tags=snapshot_tags)}
                     <hr />
                     <div>
                         <input type="submit" class="button expand" value="Create Snapshot" i18n:attributes="value" />
@@ -121,7 +119,6 @@
 </div>
 
 <div metal:fill-slot="tail_js">
-    <script src="${request.static_path('eucaconsole:static/js/widgets/tag-editor/tag-editor.js')}"></script>
     <script src="${request.static_path('eucaconsole:static/js/pages/volume_snapshots.js')}"></script>
 </div>
 

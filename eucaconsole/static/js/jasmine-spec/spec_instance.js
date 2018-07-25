@@ -32,48 +32,48 @@ describe("InstancePage", function() {
 
     describe("Initial Values Test", function() {
 
-        it("should set initial value of transitionalStates[0] to 'pending'", function() {
+        it("Initial value of transitionalStates[0] is pending", function() {
             expect(scope.transitionalStates[0]).toEqual('pending');
         });
 
-        it("should set initial value of transitionalStates[1] to 'stopping'", function() {
+        it("Initial value of transitionalStates[1] is stopping", function() {
             expect(scope.transitionalStates[1]).toEqual('stopping');
         });
 
-        it("should set initial value of transitionalStates[2] to 'shutting-down'", function() {
+        it("Initial value of transitionalStates[2] is shutting-down", function() {
             expect(scope.transitionalStates[2]).toEqual('shutting-down');
         });
 
-        it("should set initial value of instanceState to empty string", function() {
+        it("Initial value of instanceState is empty", function() {
             expect(scope.instanceState).toEqual('');
         });
 
-        it("should set initial value of isFileUserData to false", function() {
-            expect(scope.isFileUserData).toBe(false);
+        it("Initial value of isFileUserData is false", function() {
+            expect(scope.isFileUserData).not.toBeTruthy();
         });
 
-        it("should set initial value of isNotChanged to true", function() {
-            expect(scope.isNotChanged).toBe(true);
+        it("Initial value of isNotChanged is true", function() {
+            expect(scope.isNotChanged).toBeTruthy();
         });
 
-        it("should set initial value of isSubmitted to false", function() {
-            expect(scope.isSubmitted).toBe(false);
+        it("Initial value of isSubmitted is false", function() {
+            expect(scope.isSubmitted).not.toBeTruthy();
         });
 
-        it("should set initial value of isUpdating to false", function() {
-            expect(scope.isUpdating).toBe(false);
+        it("Initial value of isUpdating is false", function() {
+            expect(scope.isUpdating).not.toBeTruthy();
         });
 
-        it("should set initial value of isNotStopped to true", function() {
-            expect(scope.isNotStopped).toBe(true);
+        it("Initial value of isNotStopped is true", function() {
+            expect(scope.isNotStopped).toBeTruthy();
         });
     });
 
-    describe("#initController", function() {
+    describe("Function initController() Test", function() {
 
-        it("should call getInstanceState() when initController() is called", function() {
+        it("Should call getInstanceState() when initController() is called", function() {
             spyOn(scope, 'getInstanceState');
-            scope.initController('{"instance_state_json_url": "", "instance_userdata_json_url": ""}');
+            scope.initController('{}');
             expect(scope.getInstanceState).toHaveBeenCalled();
         });
     });

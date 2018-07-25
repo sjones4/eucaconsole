@@ -29,14 +29,14 @@
     a[href] {
         text-decoration: underline;
         &:hover {
-            color: $dxc-darkgray;
-            border-bottom: 1px solid $dxc-darkgray;
+            color: $euca-darkgray;
+            border-bottom: 1px solid $euca-darkgray;
         }
     }
 }
 
 i.delete-icon {
-    color: $dxc-darkgray !important;
+    color: $euca-darkgray !important;
     &:hover {
         color: darkred !important;
     }

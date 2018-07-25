@@ -32,18 +32,18 @@ describe("LaunchMoreInstances", function() {
 
     describe("Initial Values Test", function() {
 
-        it("should set initial value of instanceNumber to 1", function() {
+        it("Initial value of instanceNumber is 1", function() {
             expect(scope.instanceNumber).toEqual(1);
         });
 
-        it("should set initial value of expanded to false", function() {
-            expect(scope.expanded).toBe(false);
+        it("Initial value of expanded is false", function() {
+            expect(scope.expanded).not.toBeTruthy();
         });
     });
 
-    describe("#initController", function() {
+    describe("Function initController() Test", function() {
 
-        it("should call setInitialValues() when initController() is called", function() {
+        it("Should call setInitialValues() when initController() is called", function() {
             spyOn(scope, 'setInitialValues');
             scope.initController();
             expect(scope.setInitialValues).toHaveBeenCalled();

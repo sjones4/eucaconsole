@@ -35,7 +35,6 @@ from wtforms import validators
 
 from ..i18n import _
 from . import BaseSecureForm, ChoicesManager, TextEscapedField, NAME_WITHOUT_SPACES_NOTICE, BLANK_CHOICE
-from .angularcompat import AngularCompatibleSelectField, AngularCompatibleSelectMultipleField
 from ..constants.elbs import SSL_CIPHERS
 from ..views import BaseView
 
@@ -81,7 +80,7 @@ class ELBAccessLogsFormMixin(object):
     logging_enabled = wtforms.BooleanField(label=_(u'Enable logging'))
     bucket_name_error_msg = _(u'Bucket name is required')
     bucket_name_help_text = _(u'Choose from your existing buckets, or create a new bucket.')
-    bucket_name = AngularCompatibleSelectField(
+    bucket_name = wtforms.SelectField(
         label=_(u'Bucket name'),
         validators=[BucketInfoRequired(message=bucket_name_error_msg)],
     )
@@ -351,14 +350,14 @@ class CreateELBForm(ELBHealthChecksForm, ELBAccessLogsFormMixin):
         label=_(u'VPC network'),
         validators=[validators.InputRequired(message=vpc_network_error_msg)],
     )
-    vpc_subnet = AngularCompatibleSelectMultipleField(
+    vpc_subnet = wtforms.SelectMultipleField(
         label=_(u'VPC subnets'),
     )
-    securitygroup = AngularCompatibleSelectMultipleField(
+    securitygroup = wtforms.SelectMultipleField(
         label=_(u'Security groups')
     )
     securitygroup_help_text = _(u'If you do not select a security group, the default group will be used.')
-    zone = AngularCompatibleSelectMultipleField(
+    zone = wtforms.SelectMultipleField(
         label=_(u'Availability zones')
     )
     cross_zone_enabled_help_text = _(u'Distribute traffic evenly across all instances in all availability zones')
@@ -415,7 +414,6 @@ class CreateELBForm(ELBHealthChecksForm, ELBAccessLogsFormMixin):
         return self.choices_manager.availability_zones(self.region, add_blank=False)
 
 
-# TODO: see if this matches the instances landing page and re-use
 class ELBInstancesFiltersForm(BaseSecureForm):
     """Form class for filters on create ELB wizard"""
     state = wtforms.SelectMultipleField(label=_(u'Status'))
@@ -452,7 +450,7 @@ class ELBInstancesFiltersForm(BaseSecureForm):
     def set_search_facets(self):
         if self.cloud_type == 'aws':
             self.facets = [
-                {'name': 'status', 'label': self.state.label.text, 'options': self.get_status_choices()},
+                {'name': 'state', 'label': self.state.label.text, 'options': self.get_status_choices()},
                 {'name': 'availability_zone', 'label': self.availability_zone.label.text,
                     'options': self.get_availability_zone_choices(self.region)},
                 {'name': 'subnet_id', 'label': self.subnet_id.label.text,
@@ -462,7 +460,7 @@ class ELBInstancesFiltersForm(BaseSecureForm):
             vpc_choices.append(('None', _(u'No VPC')))
         else:
             self.facets = [
-                {'name': 'status', 'label': self.state.label.text, 'options': self.get_status_choices()},
+                {'name': 'state', 'label': self.state.label.text, 'options': self.get_status_choices()},
             ]
             if self.is_vpc_supported:
                 self.facets.append(

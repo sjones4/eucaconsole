@@ -141,7 +141,7 @@
 
 .euca-split { border-color: #000000 !important; width: 2.0rem !important; }
 .euca-split:hover { border-color: #ffffff !important; }
-.euca-split:hover::after { border-top-color: #ffed00 !important; }
+.euca-split:hover::after { border-top-color: #99cc33 !important; }
 
 .secondary .euca-split { border-color: #000000; }
 .secondary .euca-split:hover { border-color: #ffffff; }
@@ -183,7 +183,7 @@ table.expando tr.even, table.expando tr.alt, table.expando tr:nth-of-type(even) 
 .table .label.instance-store { background-color: #666666; }
 .table .emi-name { display: inline-block; width: 12rem; word-break: break-all; }
 
-.status.pending { background-color: #00cc00; }
+.status.pending { background-color: #00cd00; }
 
 .status.available { background-color: green; }
 
