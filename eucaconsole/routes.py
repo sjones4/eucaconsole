@@ -59,9 +59,6 @@ urls = [
     Route(name='file_download', pattern='/_getfile'),
     Route(name='render_template', pattern='/_template/*subpath'),
 
-    # AvailabilityZones #####
-    Route(name='zones_json', pattern='/zones/json'),
-
     # Images #####
     Route(name='images', pattern='/images'),
     Route(name='images_json', pattern='/images/json'),
@@ -110,7 +107,6 @@ urls = [
     Route(name='instance_volume_detach', pattern='/instances/{id}/volumes/{volume_id}/detach'),
     Route(name='instance_monitoring', pattern='/instances/{id}/monitoring'),
     Route(name='instance_monitoring_update', pattern='/instances/{id}/monitoring/update'),
-    Route(name='instance_set_termination_protection', pattern='/instances/{id}/set-termination-protection'),
 
     # Instance Types page
     Route(name='instance_types', pattern='/instance-types'),
@@ -162,8 +158,7 @@ urls = [
     Route(name='elbs_json', pattern='/elbs/json'),
     Route(name='elbs_delete', pattern='/elbs/delete'),
     # Detail page
-    Route(name='elb_wizard', pattern='/elbs/wizard*step'),
-    Route(name='elb_new', pattern='/elbs/wizard'),
+    Route(name='elb_new', pattern='/elbs/new'),
     Route(name='elb_create', pattern='/elbs/create'),
     Route(name='elb_delete', pattern='/elbs/{id}/delete'),
     Route(name='elb_view', pattern='/elbs/{id}'),
@@ -173,14 +168,8 @@ urls = [
     Route(name='elb_healthchecks', pattern='/elbs/{id}/healthchecks'),
     Route(name='elb_healthchecks_update', pattern='/elbs/{id}/healthchecks/update'),
     Route(name='elb_monitoring', pattern='/elbs/{id}/monitoring'),
-    Route(name='elb_policies_json', pattern='/elbs/policies/json'),
-
     # Certificate modal
     Route(name='certificate_create', pattern='/certificate/create'),
-    Route(name='elb_certificate', pattern='/certificate'),
-
-    # Facets for instances
-    Route(name='elb_instances_filters', pattern='/elbs/instances/filters'),
 
     # Volumes #####
     # Landing page
@@ -235,7 +224,6 @@ urls = [
     Route(name='bucket_delete', pattern='/buckets/{name}/delete'),
     Route(name='bucket_delete_keys', pattern='/buckets/{name}/delete_keys'),
     Route(name='bucket_cors_configuration', pattern='/buckets/{name}/cors_configuration'),
-    Route(name='bucket_policy', pattern='/buckets/{name}/policy'),
     Route(name='bucket_update_versioning', pattern='/buckets/{name}/updateversioning'),
     Route(name='bucket_contents', pattern='/buckets/{name}/contents/*subpath'),
     Route(name='bucket_keys', pattern='/buckets/{name}/keys/*subpath'),
@@ -250,6 +238,7 @@ urls = [
     Route(name='bucket_sign_req', pattern='/buckets/{name}/signreq/*subpath'),
     Route(name='bucket_item_url', pattern='/buckets/{name}/geturl/*subpath'),
 
+
     # Security Groups #####
     # Landing page
     Route(name='securitygroups', pattern='/securitygroups'),
@@ -262,44 +251,6 @@ urls = [
     Route(name='securitygroup_view', pattern='/securitygroups/{id}'),  # Pass id='new' to render Add SG page
     Route(name='securitygroup_update', pattern='/securitygroups/{id}/update'),
     Route(name='securitygroup_delete', pattern='/securitygroups/{id}/delete'),
-
-    # VPCs #####
-    Route(name='vpcs', pattern='/vpcs'),
-    Route(name='vpcs_json', pattern='/vpcs/json'),
-    Route(name='vpcnetworks_json', pattern='/vpcnetworks/json'),
-    Route(name='vpcsubnets_json', pattern='/vpcsubnets/json'),
-    Route(name='vpcsecuritygroups_json', pattern='/vpcsecuritygroups/json'),
-    Route(name='internet_gateway_view', pattern='/vpcs/internet-gateways/{id}'),
-    Route(name='internet_gateway_update', pattern='/vpcs/internet-gateways/{id}/update'),
-    Route(name='internet_gateway_detach', pattern='/vpcs/internet-gateways/{id}/detach'),
-    Route(name='internet_gateway_delete', pattern='/vpcs/internet-gateways/{id}/delete'),
-    Route(name='vpc_new', pattern='/vpcs/new'),
-    Route(name='vpc_create', pattern='/vpcs/create'),
-    Route(name='vpc_view', pattern='/vpcs/{id}'),
-    Route(name='vpc_update', pattern='/vpcs/{id}/update'),
-    Route(name='vpc_delete', pattern='/vpcs/{id}/delete'),
-    Route(name='vpc_add_subnet', pattern='/vpcs/{id}/add-subnet'),
-    Route(name='vpc_set_main_route_table', pattern='/vpcs/{id}/set-main-route-table'),
-    Route(name='vpc_create_internet_gateway', pattern='/vpcs/{id}/create-internet-gateway'),
-    Route(name='subnet_view', pattern='/vpcs/{vpc_id}/subnets/{id}'),
-    Route(name='subnet_update', pattern='/vpcs/{vpc_id}/subnets/{id}/update'),
-    Route(name='subnet_allocate_eips', pattern='/vpcs/{vpc_id}/subnets/{id}/allocate-eips'),
-    Route(name='subnet_associate_network_acl', pattern='/vpcs/{vpc_id}/subnets/{id}/associate-network-acl'),
-    Route(name='subnet_delete', pattern='/vpcs/{vpc_id}/subnets/{id}/delete'),
-    Route(name='route_table_create', pattern='/vpcs/{vpc_id}/subnets/{id}/create-route-table'),
-    Route(name='route_table_view', pattern='/vpcs/{vpc_id}/route-tables/{id}'),
-    Route(name='route_table_update', pattern='/vpcs/{vpc_id}/route-tables/{id}/update'),
-    Route(name='route_table_delete', pattern='/vpcs/{vpc_id}/route-tables/{id}/delete'),
-    Route(name='route_table_set_main_for_vpc', pattern='/vpcs/{vpc_id}/route-tables/{id}/set-main-for-vpc'),
-    Route(name='route_targets_json', pattern='/vpcs/{vpc_id}/route-targets-json'),
-    Route(name='nat_gateway_create', pattern='/vpcs/{vpc_id}/subnets/{id}/create-nat-gateway'),
-    Route(name='nat_gateway_view', pattern='/vpcs/{vpc_id}/nat-gateways/{id}'),
-    Route(name='nat_gateway_delete', pattern='/vpcs/{vpc_id}/nat-gateways/{id}/delete'),
-    Route(name='network_acl_new', pattern='/vpcs/{vpc_id}/network-acls/new'),
-    Route(name='network_acl_create', pattern='/vpcs/{vpc_id}/network-acls/create'),
-    Route(name='network_acl_view', pattern='/vpcs/{vpc_id}/network-acls/{id}'),
-    Route(name='network_acl_update', pattern='/vpcs/{vpc_id}/network-acls/{id}/update'),
-    Route(name='network_acl_delete', pattern='/vpcs/{vpc_id}/network-acls/{id}/delete'),
 
     # Key pairs #####
     # Landing page
@@ -438,20 +389,4 @@ urls = [
     # Update
     Route(name='stack_update', pattern='/stacks/{name}/update'),
     Route(name='stack_cancel_update', pattern='/stacks/{name}/cancelupdate'),
-
-    Route(name='queues', pattern='/queues'),
-    Route(name='queues_json', pattern='/queues/json'),
-    Route(name='queue_view', pattern='/queue/{id}'),
-    Route(name='topics', pattern='/topics'),
-
-    # Reporting
-    # API calls
-    Route(name='reporting_prefs', pattern='/reporting-api/preferences'),
-    Route(name='reporting_monthly_usage', pattern='/reporting-api/monthlyusage'),
-    Route(name='reporting_month_to_date_usage', pattern='/reporting-api/monthtodateusage'),
-    Route(name='reporting_service_usage', pattern='/reporting-api/serviceusage'),
-    Route(name='reporting_instance_usage', pattern='/reporting-api/instanceusage'),
-    # Views
-    Route(name='reporting_instance', pattern='/reports/instance-usage'),
-    Route(name='reporting', pattern='/reporting*subpath'),
 ]

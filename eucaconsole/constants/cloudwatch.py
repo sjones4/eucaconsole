@@ -68,20 +68,6 @@ METRIC_TYPES = [
     {'namespace': 'AWS/ELB', 'name': 'HTTPCode_Backend_3XX', 'unit': 'Count'},
     {'namespace': 'AWS/ELB', 'name': 'HTTPCode_Backend_4XX', 'unit': 'Count'},
     {'namespace': 'AWS/ELB', 'name': 'HTTPCode_Backend_5XX', 'unit': 'Count'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'ComputeCoreAvailable', 'unit': 'Count'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'ComputeCoreTotal', 'unit': 'Count'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'ComputeDiskAvailable', 'unit': 'Gigabytes'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'ComputeDiskTotal', 'unit': 'Gigabytes'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'ComputeMemoryAvailable', 'unit': 'Megabytes'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'ComputeMemoryTotal', 'unit': 'Megabytes'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'InstanceTypeAvailable', 'unit': 'Count'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'InstanceTypeTotal', 'unit': 'Count'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'PublicIpTypeAvailable', 'unit': 'Count'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'PublicIpTypeTotal', 'unit': 'Count'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'StorageEbsAvailable', 'unit': 'Gigabytes'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'StorageEbsTotal', 'unit': 'Gigabytes'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'StorageObjectAvailable', 'unit': 'Gigabytes'},
-    {'namespace': 'AWS/EucalyptusCapacity', 'name': 'StorageObjectTotal', 'unit': 'Gigabytes'},
 ]
 
 
@@ -149,17 +135,7 @@ METRIC_TITLE_MAPPING = {
     'GroupMinSize': _(u'Group min size'),
     'GroupPendingInstances': _(u'Group pending instances'),
     'GroupTerminatingInstances': _(u'Group terminating instances'),
-    'GroupTotalInstances': _(u'Group total instances'),
-    # SQS Metrics
-    'NumberOfMessagesDeleted': _(u'Number of messages deleted'),
-    'NumberOfMessagesSent': _(u'Number of messages sent'),
-    'NumberOfMessagesReceived': _(u'Number of messages received'),
-    'NumberOfEmptyReceives': _(u'Number of empty receives'),
-    'ApproximateNumberOfMessagesDelayed': _(u'Approximate number of messages delayed'),
-    'ApproximateNumberOfMessagesVisible': _(u'Approximate number of messages visible'),
-    'ApproximateNumberOfMessagesNotVisible': _(u'Approximate number of messages not visible'),
-    'ApproximateAgeOfOldestMessage': _(u'Approximate age of oldest message'),
-    'SentMessageSize': _(u'Sent message size')
+    'GroupTotalInstances': _(u'Group total instances')
 }
 
 # Statistic choices for CloudWatch charts

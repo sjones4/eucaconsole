@@ -6,7 +6,7 @@
  *
  */
 
-angular.module('SnapshotPage', ['TagEditorModule', 'EucaConsoleUtils'])
+angular.module('SnapshotPage', ['TagEditor', 'EucaConsoleUtils'])
     .controller('SnapshotPageCtrl', function ($scope, $http, $timeout, eucaUnescapeJson, eucaHandleError) {
         $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         $scope.snapshotStatusEndpoint = '';
@@ -188,10 +188,13 @@ angular.module('SnapshotPage', ['TagEditorModule', 'EucaConsoleUtils'])
                     if (!!closeMark) {
                         closeMark.focus();
                     }
-                } else {
+                }else{
                     var inputElement = modal.find('input[type!=hidden]').get(0);
+                    var modalButton = modal.find('button').get(0);
                     if (!!inputElement) {
                         inputElement.focus();
+                    } else if (!!modalButton) {
+                        modalButton.focus();
                     }
                }
             });

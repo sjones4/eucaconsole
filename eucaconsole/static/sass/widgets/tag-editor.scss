@@ -4,7 +4,7 @@
   @include item-list;
 
   .add-label {
-    color: $dxc-darkgray;
+    color: $euca-darkgray;
     font-size: $euca-font-size;
     margin-bottom: 6px;
   }
@@ -26,13 +26,5 @@
   input.ng-invalid.ng-touched ~ .error {
     display: block;
     @include validation-error-mixin;
-  }
-
-  #propagate-wrapper {
-    white-space: nowrap;
-    .helptext-icon {
-      position: relative;
-      left: -10px;
-    }
   }
 }

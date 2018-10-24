@@ -82,6 +82,14 @@ def check_config(settings):
         )
 
 
+def write_routes_json(path):
+    url_dict = {}
+    for url in urls:
+        url_dict[url.name] = url.pattern.replace('{', '{{').replace('}', '}}')
+    with open(os.path.join(path, 'routes.json'), 'w') as outfile:
+        json.dump(url_dict, outfile)
+
+
 def get_configurator(settings, enable_auth=True):
     settings.update(REQUIRED_CONFIG)
     check_config(settings)
@@ -102,6 +110,12 @@ def get_configurator(settings, enable_auth=True):
     config.add_static_view(name='static/' + __version__, path='static', cache_max_age=cache_duration)
     config.add_layout('eucaconsole.layout.MasterLayout',
                       'eucaconsole.layout:templates/master_layout.pt')
+
+    route_dir = '/var/run/eucaconsole'
+    if not os.path.exists(route_dir):
+        route_dir = os.path.join(os.getcwd(), 'run')
+    write_routes_json(route_dir)
+    config.add_static_view(name='static/json', path=route_dir, cache_max_age=cache_duration)
 
     locale_dir = os.path.join(os.getcwd(), 'locale')
     # use local locale directory over system one

@@ -6,7 +6,8 @@
  *
  */
 
-angular.module('StackWizard', ['TagEditorModule', 'EucaConsoleUtils', 'localytics.directives', 'StackAWSDialogs'])
+// Launch Instance page includes the Tag Editor, the Image Picker, BDM editor, and security group rules editor
+angular.module('StackWizard', ['TagEditor', 'EucaConsoleUtils', 'localytics.directives', 'StackAWSDialogs'])
     .directive('file', function(){
         return {
             restrict: 'A',

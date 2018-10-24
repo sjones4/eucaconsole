@@ -33,7 +33,7 @@ from pyramid.settings import asbool
 
 from tests import BaseTestCase
 
-SETTINGS = get_appsettings('conf/console.ini', name='main')
+SETTINGS = get_appsettings('conf/console.default.ini', name='main')
 
 
 class CacheImagesSettingTestCase(BaseTestCase):

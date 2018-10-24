@@ -44,8 +44,8 @@ from ..views import BaseView, boto_error_handler
 
 CHART_COLORS = {
     #  NOTE: NVD3 sets the seventh (index = 6) line color to red, so specify at least seven colors below
-    0: '#00c9ff',  # $dxc-blue
-    1: '#64ff00',  # $dxc-green
+    0: '#00c9ff',  # $euca-blue
+    1: '#64ff00',  # $euca-green
     2: 'purple',  # CSS Level 1 color
     3: 'navy',  # CSS Level 1 color
     4: 'green',  # CSS Level 1 color
@@ -288,7 +288,7 @@ class CloudWatchAPIView(BaseView, CloudWatchAPIMixin):
         multiplier = 1
         divider = 1
         unit = self.unit
-        period = int(self.request.params.get('period', '300'))
+        period = int(self.request.params.get('period', 300))
         if period % 60 != 0:
             raise HTTPBadRequest()  # Period (granularity) must be a multiple of 60 seconds
 

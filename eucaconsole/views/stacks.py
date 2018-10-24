@@ -129,7 +129,7 @@ class StacksView(LandingPageView):
         self.cloudformation_conn = self.get_connection(conn_type="cloudformation")
         self.initial_sort_key = 'name'
         self.prefix = '/stacks'
-        self.filter_keys = ['name', 'create-time', 'description']
+        self.filter_keys = ['name', 'create-time']
         self.sort_keys = self.get_sort_keys()
         self.json_items_endpoint = self.get_json_endpoint('stacks_json')
         self.delete_form = StacksDeleteForm(request, formdata=request.params or None)
@@ -814,15 +814,14 @@ class StackWizardView(BaseView, StackMixin):
                     if val:
                         params.append((name, val))
             tags_json = self.request.params.get('tags')
-            tags_dict = None
+            tags = None
             if tags_json:
                 tags = json.loads(tags_json)
-                tags_dict = TaggedItemView.normalize_tags(tags)
             with boto_error_handler(self.request, location):
                 self.log_request(u"Creating stack:{0}".format(stack_name))
                 result = self.cloudformation_conn.create_stack(
                     stack_name, template_url=template_url, capabilities=capabilities,
-                    parameters=params, tags=tags_dict
+                    parameters=params, tags=tags
                 )
                 stack_id = result[result.rfind('/') + 1:]
                 d = hashlib.md5()

@@ -141,7 +141,7 @@
 
 .euca-split { border-color: #000000 !important; width: 2.0rem !important; }
 .euca-split:hover { border-color: #ffffff !important; }
-.euca-split:hover::after { border-top-color: #ffed00 !important; }
+.euca-split:hover::after { border-top-color: #99cc33 !important; }
 
 .secondary .euca-split { border-color: #000000; }
 .secondary .euca-split:hover { border-color: #ffffff; }
@@ -165,7 +165,7 @@ table.expando tr.even, table.expando tr.alt, table.expando tr:nth-of-type(even) 
 
 .row .status.running { background-color: green; }
 
-.row .status.pending { background-color: #00cc00; }
+.row .status.pending { background-color: #00cd00; }
 
 .row .status.stopped { background-color: darkred; }
 
@@ -191,8 +191,6 @@ form .row.controls-wrapper { margin-bottom: 0; }
 
 #current-status { position: relative; top: 2px; }
 
-#set-termination-control { display: inline-block; margin-left: 1rem; }
-
 .connect-center { text-align: center; }
 
 .fi-alert { color: darkred; }
@@ -201,7 +199,7 @@ form .row.controls-wrapper { margin-bottom: 0; }
 .tile .footer { height: 24px; padding-top: 2px; }
 .tile .footer.attached { background-color: #000000; }
 .tile .footer.attaching { background-color: #333333; }
-.tile .footer.detaching { background-color: #00cc00; }
+.tile .footer.detaching { background-color: #00cd00; }
 
 #attach-volume-modal [data-abide] .inline .error small.error { display: block !important; margin-bottom: 0; }
 #attach-volume-modal #device { width: 10rem; }

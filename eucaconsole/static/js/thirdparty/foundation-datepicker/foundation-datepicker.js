@@ -18,7 +18,7 @@
         var that = this;
 
         this.element = $(element);
-        this.autoShow = (options.autoShow == undefined ? true : options.autoShow);
+        this.autoShow = options.autoShow || true;
         this.appendTo = options.appendTo || 'body';
         this.closeButton = options.closeButton;
         this.language = options.language || this.element.data('date-language') || "en";
@@ -39,7 +39,6 @@
         this.linkFormat = DPGlobal.parseFormat(options.linkFormat || this.element.data('link-format') || 'yyyy-mm-dd hh:ii:ss');
         this.minuteStep = options.minuteStep || this.element.data('minute-step') || 5;
         this.pickerPosition = options.pickerPosition || this.element.data('picker-position') || 'bottom-right';
-        this.initialDate = options.initialDate || null;
 
         this._attachEvents();
 
@@ -111,7 +110,7 @@
         if (this.isRTL) {
             this.picker.addClass('datepicker-rtl');
             this.picker.find('.prev i, .next i')
-                .toggleClass('fa-chevron-left fa-chevron-right');
+                .toggleClass('fa fa-chevron-left fa-chevron-right').toggleClass('fa-chevron-left fa-chevron-right');
         }
         $(document).on('mousedown', function(e) {
             // Clicked outside the datepicker, hide it
@@ -375,23 +374,16 @@
 
         update: function() {
             var date, fromArgs = false;
-            var currentVal = this.isInput ? this.element.val() : this.element.data('date') || this.element.find('input').val();
             if (arguments && arguments.length && (typeof arguments[0] === 'string' || arguments[0] instanceof Date)) {
                 date = arguments[0];
                 fromArgs = true;
-            } 
-            else if (!currentVal && this.initialDate != null) { // If value is not set, set it to the initialDate 
-                date = this.initialDate
-            }
-            else {
+            } else {
                 date = this.isInput ? this.element.val() : this.element.data('date') || this.element.find('input').val();
             }
 
-
-
             this.date = DPGlobal.parseDate(date, this.format, this.language);
 
-            if (fromArgs || this.initialDate != null) this.setValue();
+            if (fromArgs) this.setValue();
 
             if (this.date < this.startDate) {
                 this.viewDate = new Date(this.startDate.valueOf());
@@ -442,7 +434,7 @@
                 startMonth = this.startDate !== -Infinity ? this.startDate.getUTCMonth() : -Infinity,
                 endYear = this.endDate !== Infinity ? this.endDate.getUTCFullYear() : Infinity,
                 endMonth = this.endDate !== Infinity ? this.endDate.getUTCMonth() : Infinity,
-                currentDate = this.date && UTCDate(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate()).valueOf(),
+                currentDate = this.date && this.date.valueOf(),
                 today = new Date(),
                 titleFormat = dates[this.language].titleFormat || dates['en'].titleFormat;
             // this.picker.find('.datepicker-days thead th.date-switch')
@@ -721,15 +713,6 @@
                     case 'span':
                         if (!target.is('.disabled')) {
                             if (target.is('.month')) {
-                              if (this.minView === 3) {
-                                var month = target.parent().find('span').index(target) || 0;
-                                var year = this.viewDate.getUTCFullYear(),
-                                    day = 1,
-                                    hours = this.viewDate.getUTCHours(),
-                                    minutes = this.viewDate.getUTCMinutes(),
-                                    seconds = this.viewDate.getUTCSeconds();
-                                this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
-                              } else {
                                 this.viewDate.setUTCDate(1);
                                 var month = target.parent().find('span').index(target);
                                 this.viewDate.setUTCMonth(month);
@@ -737,17 +720,7 @@
                                     type: 'changeMonth',
                                     date: this.viewDate
                                 });
-                              }
                             } else if (target.is('.year')) {
-                              if (this.minView === 4) {
-                                var year = parseInt(target.text(), 10) || 0;
-                                var month = 0,
-                                    day = 1,
-                                    hours = this.viewDate.getUTCHours(),
-                                    minutes = this.viewDate.getUTCMinutes(),
-                                    seconds = this.viewDate.getUTCSeconds();
-                                this._setDate(UTCDate(year, month, day, hours, minutes, seconds, 0));
-                              } else {
                                 this.viewDate.setUTCDate(1);
                                 var year = parseInt(target.text(), 10) || 0;
                                 this.viewDate.setUTCFullYear(year);
@@ -755,7 +728,6 @@
                                     type: 'changeYear',
                                     date: this.viewDate
                                 });
-                              }
                             } else if (target.is('.hour')) {
                                 var hours = parseInt(target.text(), 10) || 0;
                                 var year = this.viewDate.getUTCFullYear(),
@@ -1301,9 +1273,9 @@
         },
         headTemplate: '<thead>' +
             '<tr>' +
-            '<th class="prev"><i class="fa fa-chevron-left fi-arrow-left"/></th>' +
+            '<th class="prev"><i class="fa fa-chevron-left"/></th>' +
             '<th colspan="5" class="date-switch"></th>' +
-            '<th class="next"><i class="fa fa-chevron-right fi-arrow-right"/></th>' +
+            '<th class="next"><i class="fa fa-chevron-right"/></th>' +
             '</tr>' +
             '</thead>',
         contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
@@ -1345,7 +1317,7 @@
         DPGlobal.footTemplate +
         '</table>' +
         '</div>' +
-        '<a class="button datepicker-close tiny alert right" style="width:auto;"><i class="fa fa-remove fa-times fi-x"></i></a>' +
+        '<a class="button datepicker-close tiny alert right" style="width:auto;"><i class="fa fa-remove fa-times"></i></a>' +
         '</div>';
 
     $.fn.fdatepicker.DPGlobal = DPGlobal;

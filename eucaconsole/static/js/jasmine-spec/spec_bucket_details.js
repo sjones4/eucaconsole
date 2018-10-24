@@ -61,20 +61,19 @@ describe("BucketDetailsPage", function() {
     describe("#initController", function() {
         var optionsJson = '{"bucket_objects_count_url": "objects_count_url", "has_cors_config": false}';
 
-        beforeEach(function () {
-            spyOn(scope, 'handleUnsavedChanges');
-            scope.initController(optionsJson);
-        });
-
         it("should set bucketObjectsCountUrl when initController() is called", function() {
+            scope.initController(optionsJson);
             expect(scope.bucketObjectsCountUrl).toEqual('objects_count_url');
         });
 
         it("should set hasCorsConfig boolean when controller is initialized", function() {
+            scope.initController(optionsJson);
             expect(scope.hasCorsConfig).toBe(false);
         });
 
         it("should call handleUnsavedChanges() when initController() is called", function() {
+            spyOn(scope, 'handleUnsavedChanges');
+            scope.initController('{}');
             expect(scope.handleUnsavedChanges).toHaveBeenCalled();
         });
     });
@@ -104,6 +103,11 @@ describe("CORS Configuration Modal Directive", function() {
         $templateCache.put('mock.template.html', template);
     }));
 
+    beforeEach(angular.mock.inject(function ($injector) {
+        $httpBackend = $injector.get('$httpBackend');
+        $httpBackend.when('GET', '/static/json/routes.json').respond(200, '');
+    }));
+
     beforeEach(function () {
         var directiveHtml = [
             '<div cors-config-modal=""',
@@ -115,6 +119,7 @@ describe("CORS Configuration Modal Directive", function() {
         ].join('');
         element = $compile(directiveHtml)($rootScope);
         $rootScope.$digest();
+        $httpBackend.flush();
         scope = element.isolateScope();
     });
 

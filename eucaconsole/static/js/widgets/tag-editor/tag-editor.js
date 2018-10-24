@@ -2,13 +2,16 @@ angular.module('TagEditorModule', ['EucaConsoleUtils'])
     .directive('tagEditor', ['eucaUnescapeJson', function (eucaUnescapeJson) {
         return {
             scope: {
+                template: '@',
                 showNameTag: '@',
                 autoscale: '@'
             },
             transclude: true,
             restrict: 'E',
             require: 'ngModel',
-            templateUrl: '/_template/tag-editor/tag-editor',
+            templateUrl: function (element, attributes) {
+                return attributes.template;
+            },
             controller: ['$scope', '$window', function ($scope, $window) {
                 $scope.newTagKey = '';
                 $scope.newTagValue = '';
@@ -75,13 +78,13 @@ angular.module('TagEditorModule', ['EucaConsoleUtils'])
             }],
             link: function (scope, element, attrs, ctrl, transcludeContents) {
                 var content = transcludeContents();
-                var tags = JSON.parse(content.text() || '[]');
+                var tags = JSON.parse(content.text() || '{}');
                 scope.tags = tags.filter(function (current) {
                     return !current.name.match(/^aws:.*/) &&
                         !current.name.match(/^euca:.*/);
                 });
 
-                attrs.showNameTag = attrs.showNameTag !== 'false';
+                attrs.showNameTag = !attrs.showNameTag; // default to true
                 attrs.autoscale = !!attrs.autoscale;    // default to false
 
                 scope.updateViewValue = function () {

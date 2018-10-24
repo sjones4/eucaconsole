@@ -5,7 +5,7 @@
  * @requires AngularJS, jQuery
  *
  */
-angular.module('StackCancelUpdateDialog', ['EucaConsoleUtils'])
+angular.module('StackCancelUpdateDialog', ['EucaRoutes', 'EucaConsoleUtils'])
     .directive('stackCancelUpdateDialog', function (eucaUnescapeJson) {
         return {
             scope: {
@@ -16,15 +16,13 @@ angular.module('StackCancelUpdateDialog', ['EucaConsoleUtils'])
             templateUrl: function (element, attributes) {
                 return attributes.template;
             },
-            controller: ['$scope', '$http', '$timeout', '$interpolate', 'eucaHandleError', function($scope, $http, $timeout, $interpolate, eucaHandleError) {
+            controller: ['$scope', '$http', '$timeout', 'eucaRoutes', 'eucaHandleError', function($scope, $http, $timeout, eucaRoutes, eucaHandleError) {
                 $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 $scope.cancelUpdateStack = function($event) {
                     $event.preventDefault();
                     var csrf_token = $('input[name="csrf_token"]').val();
                     var data = "name=" + $scope.stackName + "&csrf_token=" + csrf_token;
-                    $http({
-                        method:'POST',
-                        url: $interpolate('/stacks/{{name}}/cancelupdate')({name: $scope.stackName}),
+                    $http({method:'POST', url: eucaRoutes.getRoute('stack_cancel_update', {'name': $scope.stackName}),
                         data:data,
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                     }).then(function successCallback(oData) {

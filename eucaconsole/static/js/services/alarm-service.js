@@ -5,43 +5,52 @@
  * @requires AngularJS, jQuery
  *
  */
-angular.module('AlarmServiceModule', [])
-.factory('AlarmService', ['$http', '$interpolate', function ($http, $interpolate) {
+angular.module('AlarmServiceModule', ['EucaRoutes'])
+.factory('AlarmService', ['$http', 'eucaRoutes', function ($http, eucaRoutes) {
     $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     return {
         getAlarm: function (id) {
-            return $http({
-                method: 'GET',
-                url: '/alarms/' + btoa(id) + '/json'
-            }).then( function (response) {
-                return response.data || {
-                    alarm: {}
-                };
-            });
+            return eucaRoutes.getRouteDeferred('cloudwatch_alarm_json', { alarm_id: btoa(id) })
+                .then(function (path) {
+                    return $http({
+                        method: 'GET',
+                        url: path
+                    }).then( function (response) {
+                        return response.data || {
+                            alarm: {}
+                        };
+                    });
+                });
         },
 
         createAlarm: function (alarm, csrf_token) {
-            return $http({
-                method: 'PUT',
-                url: '/alarms',
-                data: {
-                    alarm: alarm,
-                    csrf_token: csrf_token
-                }
-            });
+            return eucaRoutes.getRouteDeferred('cloudwatch_alarms')
+                .then(function (path) {
+                    return $http({
+                        method: 'PUT',
+                        url: path,
+                        data: {
+                            alarm: alarm,
+                            csrf_token: csrf_token
+                        }
+                    });
+                });
         },
 
         updateAlarm: function (alarm, csrf_token, flash) {
-            return $http({
-                method: 'PUT',
-                url: '/alarms',
-                data: {
-                    alarm: alarm,
-                    csrf_token: csrf_token,
-                    flash: flash
-                }
-            });
+            return eucaRoutes.getRouteDeferred('cloudwatch_alarms')
+                .then(function (path) {
+                    return $http({
+                        method: 'PUT',
+                        url: path,
+                        data: {
+                            alarm: alarm,
+                            csrf_token: csrf_token,
+                            flash: flash
+                        }
+                    });
+                });
         },
 
         deleteAlarms: function (alarms, csrf_token, flash) {
@@ -49,49 +58,61 @@ angular.module('AlarmServiceModule', [])
                 return current.name;
             });
 
-            return $http({
-                method: 'DELETE',
-                url: '/alarms',
-                data: {
-                    alarms: alarmNames,
-                    csrf_token: csrf_token,
-                    flash: flash
-                }
-            });
+            return eucaRoutes.getRouteDeferred('cloudwatch_alarms')
+                .then(function (path) {
+                    return $http({
+                        method: 'DELETE',
+                        url: path,
+                        data: {
+                            alarms: alarmNames,
+                            csrf_token: csrf_token,
+                            flash: flash
+                        }
+                    });
+                });
         },
 
         getHistory: function (id) {
-            return $http({
-                method: 'GET',
-                url: '/alarms/' + btoa(id) + '/history/json'
-            }).then(function (response) {
-                var data = response.data || {
-                    history: []
-                };
-                return data.history;
-            });
+            return eucaRoutes.getRouteDeferred('cloudwatch_alarm_history_json', { alarm_id: btoa(id) })
+                .then(function (path) {
+                    return $http({
+                        method: 'GET',
+                        url: path
+                    }).then(function (response) {
+                        var data = response.data || {
+                            history: []
+                        };
+                        return data.history;
+                    });
+                });
         },
 
         getAlarmsForResource: function (id, type) {
-            return $http({
-                method: 'GET',
-                url: $interpolate('/alarms/resource/{{id}}/json')({id: id}),
-                params: {
-                    'resource-type': type
-                }
-            }).then(function success (response) {
-                var data = response.data.results || [];
-                return data;
-            });
+            return eucaRoutes.getRouteDeferred('cloudwatch_alarms_for_resource_json', { id: id })
+                .then(function (path) {
+                    return $http({
+                        method: 'GET',
+                        url: path,
+                        params: {
+                            'resource-type': type
+                        }
+                    }).then(function success (response) {
+                        var data = response.data.results || [];
+                        return data;
+                    });
+                });
         },
 
         getAlarmNames: function (id, type) {
-            return $http({
-                method: 'GET',
-                url: '/alarms/names/json'
-            }).then(function success (response) {
-                return response.data.results || [];
-            });
+            return eucaRoutes.getRouteDeferred('cloudwatch_alarm_names_json')
+                .then(function (path) {
+                    return $http({
+                        method: 'GET',
+                        url: path
+                    }).then(function success (response) {
+                        return response.data.results || [];
+                    });
+                });
         },
 
     };

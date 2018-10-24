@@ -52,6 +52,7 @@ from ..models import Notification
 from ..models.auth import AWSAuthenticator, ConnectionManager
 from ..views import BaseView
 from ..views import JSONResponse
+from ..constants import AWS_REGIONS
 
 
 INVALID_SSL_CERT_MSG = _(u"This cloud's SSL server certificate isn't valid. Please contact your cloud administrator.")
@@ -108,7 +109,6 @@ class LoginView(BaseView, PermissionCheckMixin):
         self.came_from = self.sanitize_url(self.request.params.get('came_from', referrer))
         self.login_form_errors = []
         self.duration = str(int(self.request.registry.settings.get('session.cookie_expires')) + 60)
-        self.admin_duration = str(int(self.request.registry.settings.get('session.max_admin_expires', 3600)) + 60)
         self.login_refresh = str(int(self.request.registry.settings.get('session.timeout')) - 60)
         self.secure_session = asbool(self.request.registry.settings.get('session.secure', False))
         self.https_proxy = self.request.environ.get('HTTP_X_FORWARDED_PROTO') == 'https'
@@ -286,8 +286,6 @@ class LoginView(BaseView, PermissionCheckMixin):
             password = self.request.params.get('password')
             euca_region = self.request.params.get('euca-region')
             try:
-                if username == 'admin':
-                    self.duration = min(self.duration, self.admin_duration)
                 # TODO: also return dns enablement
                 creds = auth.authenticate(
                     account=account, user=username, passwd=password,
@@ -353,7 +351,8 @@ class LoginView(BaseView, PermissionCheckMixin):
                 session['cloud_type'] = 'aws'
                 session['auth_type'] = 'keys'
                 self._assign_session_creds(session, creds)
-                session['region'] = aws_region if aws_region else default_region
+                last_visited_aws_region = [reg for reg in AWS_REGIONS if reg.get('name') == aws_region]
+                session['region'] = aws_region if last_visited_aws_region else default_region
                 session['username_label'] = u'{user}...@AWS'.format(user=creds.access_key[:8])
                 session['supported_platforms'] = self.get_account_attributes(['supported-platforms'])
                 session['default_vpc'] = self.get_account_attributes(['default-vpc'])

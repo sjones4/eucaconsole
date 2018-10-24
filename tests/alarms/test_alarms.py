@@ -38,6 +38,7 @@ class MockAlarmMixin(object):
     """Creates a mock Alarm via moto"""
 
     @staticmethod
+    @mock_cloudwatch
     def create_alarm(name='test-alarm', metric='CPUUtilization', namespace='AWS/EC2', statistic='Average',
                      comparison='>=', threshold=90, period=500, evaluation_periods=1, unit='Percent',
                      description='Test Alarm', dimensions=None):
@@ -50,7 +51,7 @@ class MockAlarmMixin(object):
             description=description, dimensions=dimensions
         )
         alarm_created = cw_conn.put_metric_alarm(metric_alarm)
-        return alarm_created
+        return cw_conn, alarm_created
 
 
 class MockAlarmStatusMixin(object):
@@ -65,16 +66,14 @@ class ResourceAlarmsTestCase(unittest.TestCase, MockAlarmMixin):
     @mock_cloudwatch
     def test_fetch_alarms_for_instance(self):
         instance_id = 'i-123456'
-        self.create_alarm(dimensions={'InstanceId': [instance_id]})
-        cw_conn = boto.connect_cloudwatch('us-east')
+        cw_conn, alarm_created = self.create_alarm(dimensions={'InstanceId': [instance_id]})
         instance_alarms = Alarm.get_alarms_for_resource(instance_id, dimension_key='InstanceId', cw_conn=cw_conn)
         self.assertEqual(len(instance_alarms), 1)
 
     @mock_cloudwatch
     def test_fetch_alarms_for_unknown_instance(self):
         instance_id = 'i-123456'
-        self.create_alarm(dimensions={'InstanceId': [instance_id]})
-        cw_conn = boto.connect_cloudwatch('us-east')
+        cw_conn, alarm_created = self.create_alarm(dimensions={'InstanceId': [instance_id]})
         instance_alarms = Alarm.get_alarms_for_resource('unlikely-id', dimension_key='InstanceId', cw_conn=cw_conn)
         self.assertEqual(len(instance_alarms), 0)
 
@@ -85,8 +84,7 @@ class ResourceAlarmsTestCase(unittest.TestCase, MockAlarmMixin):
             metric='RequestCount', namespace='AWS/ELB', statistic='Sum', unit=None,
             dimensions={'LoadBalancerName': elb_name},
         )
-        self.create_alarm(**alarm_kwargs)
-        cw_conn = boto.connect_cloudwatch('us-east')
+        cw_conn, alarm_created = self.create_alarm(**alarm_kwargs)
         elb_alarms = Alarm.get_alarms_for_resource(elb_name, dimension_key='LoadBalancerName', cw_conn=cw_conn)
         self.assertEqual(len(elb_alarms), 1)
 

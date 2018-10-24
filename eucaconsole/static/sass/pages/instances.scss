@@ -9,8 +9,8 @@ $instance-status-color-running: green;
 $instance-status-color-pending: lighten(green, 15%);
 $instance-status-color-stopped: darkred;
 $instance-status-color-stopping: red;
-$instance-status-color-terminated: $dxc-darkgray;
-$instance-status-color-terminating: $dxc-lightgray;
+$instance-status-color-terminated: $euca-darkgray;
+$instance-status-color-terminating: $euca-lightgray;
 
 
 // Tile/table view

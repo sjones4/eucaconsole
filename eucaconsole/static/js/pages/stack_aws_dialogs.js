@@ -5,7 +5,7 @@
  * @requires AngularJS, jQuery
  *
  */
-angular.module('StackAWSDialogs', ['EucaConsoleUtils'])
+angular.module('StackAWSDialogs', ['EucaRoutes', 'EucaConsoleUtils'])
     .directive('awsTemplateDialogs', function (eucaUnescapeJson) {
         return {
             scope: {
@@ -23,7 +23,7 @@ angular.module('StackAWSDialogs', ['EucaConsoleUtils'])
             templateUrl: function (element, attributes) {
                 return attributes.template;
             },
-            controller: ['$scope', '$http', 'eucaHandleError', function($scope, $http, eucaHandleError) {
+            controller: ['$scope', '$http', 'eucaRoutes', 'eucaHandleError', function($scope, $http, eucaRoutes, eucaHandleError) {
                 $scope.toggleContent = function () {
                     $scope.expanded = !$scope.expanded;
                 };
@@ -36,7 +36,7 @@ angular.module('StackAWSDialogs', ['EucaConsoleUtils'])
                     // skip file param since we're relying on template already being in S3
                     $scope.loading = true;
                     $scope.parameters = undefined;
-                    $http.post('/stacks/templateconvert', fd, {
+                    $http.post(eucaRoutes.getRoute('stack_template_convert'), fd, {
                             headers: {'Content-Type': undefined},
                             transformRequest: angular.identity
                     }).

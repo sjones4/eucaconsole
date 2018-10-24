@@ -95,8 +95,13 @@ angular.module('StackPage', ['MagicSearch', 'EucaConsoleUtils', 'StackCancelUpda
                     }
                 } else {
                     var inputElement = modal.find('input[type!=hidden]').get(0);
+                    var modalButton = modal.find('button').get(0);
                     if (!!inputElement) {
                         inputElement.focus();
+                    } else {
+                        if (!!modalButton) {
+                            modalButton.focus();
+                        }
                     }
                 }
             });

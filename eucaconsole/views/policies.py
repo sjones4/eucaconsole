@@ -33,12 +33,11 @@ import simplejson as json
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
-from ..constants import policies, permissions
+from ..constants import policies, permissions, AWS_REGIONS
 from ..forms import ChoicesManager
 from ..forms.policies import IAMPolicyWizardForm
 from ..i18n import _
 from ..models import Notification
-from ..models.auth import RegionCache
 from ..views import BaseView, JSONResponse, TaggedItemView
 from . import boto_error_handler
 
@@ -137,15 +136,11 @@ class IAMPolicyWizardView(BaseView):
             'cloudType': self.cloud_type,
             'actionsList': self.get_all_actions(),
             'languageCode': self.get_language_code(),
-            'awsRegions': self.get_region_choices(),
+            'awsRegions': AWS_REGIONS,
             'existingPolicies': self.get_existing_policies(),
             'createPolicyUrl': self.request.route_path('iam_policy_create'),
             'policyActions': permissions.POLICY_ACTIONS,
         }))
-
-    def get_region_choices(self):
-        conn = self.get_connection()
-        return RegionCache(conn).regions()
 
     def get_existing_policies(self):
         if self.target_type == 'account':

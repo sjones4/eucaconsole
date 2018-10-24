@@ -108,12 +108,14 @@ angular.module('AlarmHistoryPage', ['MagicSearch', 'AlarmServiceModule', 'ModalM
         restrict: 'A',
         require: '^modal',
         link: function (scope, element, attrs) {
-            scope.detailDisplayJson = JSON.stringify(
-                scope.currentHistoryItem, null, 2);
-            scope.downloadableContent = btoa(scope.detailDisplayJson);
+            scope.$on('modal:open', function (event, name) {
+                scope.detailDisplayJson = JSON.stringify(
+                    scope.currentHistoryItem, null, 2);
+                scope.downloadableContent = btoa(scope.detailDisplayJson);
 
-            var target = element.find('pre');
-            scope.highlightContents(target[0]);
+                var target = element.find('pre');
+                scope.highlightContents(target[0]);
+            });
 
             scope.$on('modal:close', function () {
                 delete scope.currentHistoryItem;
