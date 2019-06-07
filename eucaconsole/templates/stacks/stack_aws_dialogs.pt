@@ -3,7 +3,7 @@
     <div id="aws-error-modal" class="reveal-modal medium" data-reveal="">
         <h3 class="warn-dialog" i18n:translate="">Warning: Unsupported items detected</h3>
         <p i18n:translate="">
-            This AWS template contains services or resources that Eucalyptus does not yet support.
+            This AWS template contains services or resources that ATS does not yet support.
         </p>
         <p i18n:translate="">
             Please edit the template to remove the unsupported items and try again.
@@ -42,7 +42,7 @@
     <div id="aws-warn-modal" class="reveal-modal medium" data-reveal="">
         <h3 class="warn-dialog" i18n:translate="">Warning: AWS template detected</h3>
         <p i18n:translate="">
-            It appears you have selected an AWS template to create a stack on a Eucalyptus cloud.
+            It appears you have selected an AWS template to create a stack on a ATS cloud.
         </p>
         <p i18n:translate="">
             Supported parameters (for example, machine images or instance types) will be converted to maintain compatibility with this cloud.

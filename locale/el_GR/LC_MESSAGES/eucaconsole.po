@@ -2814,11 +2814,11 @@ msgstr ""
 
 #: eucaconsole/templates/login.pt:33
 msgid ""
-"Warning! JavaScript is not enabled on your browser. To use the Eucalyptus"
+"Warning! JavaScript is not enabled on your browser. To use the ATS"
 " Management Console, please enable JavaScript in your browser's settings."
 msgstr ""
 "Προειδοποίηση! Δεν είναι ενεργοποιημένη η JavaScript στον περιηγητή σας. "
-"Για να χρησιμοποιήσετε την κονσόλα διαχείρισης του Eucalyptus, "
+"Για να χρησιμοποιήσετε την κονσόλα διαχείρισης του ATS, "
 "παρακαλούμε ενεργοποιήστε τη JavaScript στις ρυθμίσεις του περιηγητή σας."
 
 #: eucaconsole/templates/login.pt:39
@@ -2835,12 +2835,12 @@ msgstr ""
 "κείμενο."
 
 #: eucaconsole/templates/login.pt:50 eucaconsole/templates/login.pt:91
-msgid "Log in to Eucalyptus"
-msgstr "Συνδεθείτε στο Eucalyptus"
+msgid "Log in to ATS"
+msgstr "Συνδεθείτε στο ATS"
 
 #: eucaconsole/templates/login.pt:51
-msgid "Eucalyptus"
-msgstr "Eucalyptus"
+msgid "ATS"
+msgstr "ATS"
 
 #: eucaconsole/templates/login.pt:56 eucaconsole/templates/login.pt:136
 msgid "Log in to AWS"
@@ -3217,8 +3217,8 @@ msgstr ""
 "εσάς."
 
 #: eucaconsole/templates/master_layout.pt:10
-msgid "Eucalyptus Management Console"
-msgstr "Eucalyptus - Κονσόλα διαχείρισης"
+msgid "ATS Management Console"
+msgstr "ATS - Κονσόλα διαχείρισης"
 
 #: eucaconsole/templates/master_layout.pt:64
 #: eucaconsole/templates/master_layout.pt:113
@@ -3230,8 +3230,8 @@ msgid "Log out"
 msgstr "Αποσύνδεση"
 
 #: eucaconsole/templates/master_layout.pt:115
-msgid "Eucalyptus cloud software version:"
-msgstr "Έκδοση λογισμικού του Eucalyptus cloud:"
+msgid "ATS cloud software version:"
+msgstr "Έκδοση λογισμικού του ATS cloud:"
 
 #: eucaconsole/templates/master_layout.pt:121
 msgid "Session Timeout"
@@ -6855,10 +6855,10 @@ msgstr ""
 #: eucaconsole/templates/keypairs/keypair_view.pt:82
 msgid ""
 "Importing a public key allows you to use an existing SSH key to access "
-"your Eucalyptus instances."
+"your ATS instances."
 msgstr ""
 "Η εισαγωγή ενός δημόσιου κλειδιού σας επιτρέπει να χρησιμοποιήσετε "
-"υπάρχον κλειδιά SSH για να συνδεθείτε με τις μηχανές σας στο Eucalyptus."
+"υπάρχον κλειδιά SSH για να συνδεθείτε με τις μηχανές σας στο ATS."
 
 #: eucaconsole/templates/keypairs/keypair_view.pt:106
 #: eucaconsole/views/keypairs.py:111
@@ -8447,7 +8447,7 @@ msgstr "Προειδοποίηση: Εντοπίστηκαν μη έγκυροι
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:5
 msgid ""
-"This AWS template contains services or resources that Eucalyptus does not"
+"This AWS template contains services or resources that ATS does not"
 " yet support."
 msgstr ""
 
@@ -8470,8 +8470,8 @@ msgstr "Προειδοποίηση: Εντοπίστηκαν μη έγκυροι
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:44
 msgid ""
-"It appears you have selected an AWS template to create a stack on a "
-"Eucalyptus cloud."
+"It appears you have selected an AWS template to create a stack on an "
+"ATS cloud."
 msgstr ""
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:47

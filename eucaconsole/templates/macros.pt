@@ -349,7 +349,7 @@
 <metal:tageditorhelp metal:define-macro="tageditor_help">
     <div class="help-content" id="tag-editor-help">
         <h5 class="title">Manage Tags</h5>
-        <p> To help you manage your cloud's instances, images, and other Eucalyptus resources,
+        <p> To help you manage your cloud's instances, images, and other ATS resources,
             you can optionally assign your own metadata to each resource in the form of tags.
             You can use tags to create user-friendly names, make resource searching easier,
             and improve coordination between multiple users.</p>

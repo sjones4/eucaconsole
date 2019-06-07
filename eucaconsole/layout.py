@@ -53,7 +53,7 @@ except ImportError:
 
 
 class MasterLayout(object):
-    site_title = "Eucalyptus Management Console"
+    ATS = "Eucalyptus Management Console"
 
     def __init__(self, context, request):
         self.context = context

@@ -2786,9 +2786,9 @@ msgstr ""
 
 #: eucaconsole/templates/login.pt:33
 msgid ""
-"Warning! JavaScript is not enabled on your browser. To use the Eucalyptus"
+"Warning! JavaScript is not enabled on your browser. To use the ATS"
 " Management Console, please enable JavaScript in your browser's settings."
-msgstr "警告! 你的浏览器不用使用JavaScript 要使用Eucalyptus管理控制台，你设置你的浏览器允许运行JavaScript。"
+msgstr "警告! 你的浏览器不用使用JavaScript 要使用ATS管理控制台，你设置你的浏览器允许运行JavaScript。"
 
 #: eucaconsole/templates/login.pt:39
 msgid "WARNING: SSL not enabled"
@@ -2801,12 +2801,12 @@ msgid ""
 msgstr "这是非信任的连接,因为服务器没有开启SSL.用户的认证信息会用可见的文本格式方式发送"
 
 #: eucaconsole/templates/login.pt:50 eucaconsole/templates/login.pt:91
-msgid "Log in to Eucalyptus"
-msgstr "登陆到Eucalyptus"
+msgid "Log in to ATS"
+msgstr "登陆到ATS"
 
 #: eucaconsole/templates/login.pt:51
-msgid "Eucalyptus"
-msgstr "Eucalyptus"
+msgid "ATS"
+msgstr "ATS"
 
 #: eucaconsole/templates/login.pt:56 eucaconsole/templates/login.pt:136
 msgid "Log in to AWS"
@@ -3165,8 +3165,8 @@ msgid ""
 msgstr "请联系cloud管理员更改你的权限或者为你生成新的访问keys"
 
 #: eucaconsole/templates/master_layout.pt:10
-msgid "Eucalyptus Management Console"
-msgstr "Eucalyptus 管理控制台"
+msgid "ATS Management Console"
+msgstr "ATS 管理控制台"
 
 #: eucaconsole/templates/master_layout.pt:64
 #: eucaconsole/templates/master_layout.pt:113
@@ -3178,8 +3178,8 @@ msgid "Log out"
 msgstr "退出"
 
 #: eucaconsole/templates/master_layout.pt:115
-msgid "Eucalyptus cloud software version:"
-msgstr "Eucalyptus 云软件版本: <dynamic element>"
+msgid "ATS cloud software version:"
+msgstr "ATS 云软件版本: <dynamic element>"
 
 #: eucaconsole/templates/master_layout.pt:121
 msgid "Session Timeout"
@@ -6676,7 +6676,7 @@ msgstr "保存该文件到一个地方，以后在连接虚拟机时，你需要
 #: eucaconsole/templates/keypairs/keypair_view.pt:82
 msgid ""
 "Importing a public key allows you to use an existing SSH key to access "
-"your Eucalyptus instances."
+"your ATS instances."
 msgstr "正在导入一个现存的SSH key的公钥, 你以后可以用该SSH Key来访问虚拟机"
 
 #: eucaconsole/templates/keypairs/keypair_view.pt:106
@@ -8221,7 +8221,7 @@ msgstr "警告: 检测到非法的规则"
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:5
 msgid ""
-"This AWS template contains services or resources that Eucalyptus does not"
+"This AWS template contains services or resources that ATS does not"
 " yet support."
 msgstr ""
 
@@ -8244,8 +8244,8 @@ msgstr "警告: 检测到非法的规则"
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:44
 msgid ""
-"It appears you have selected an AWS template to create a stack on a "
-"Eucalyptus cloud."
+"It appears you have selected an AWS template to create a stack on an "
+"ATS cloud."
 msgstr ""
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:47

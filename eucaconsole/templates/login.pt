@@ -31,7 +31,7 @@
          ng-app="LoginPage" ng-controller="LoginPageCtrl" ng-init="initController('${controller_options_json}')">
         <div id="javascript-warning">
             <p i18n:translate=""> Warning! JavaScript is not enabled on your browser.
-            To use the Eucalyptus Management Console, please enable JavaScript in your browser's settings.
+            To use the ATS Management Console, please enable JavaScript in your browser's settings.
             </p>
         </div>
         <div id="ssl-warning" ng-show="showHttpsWarning" ng-cloak="">
@@ -47,8 +47,8 @@
                 <dl class="tabs" id="login-tabs" data-tab="">
                     <dd id="euca-tab" class="active">
                         <a href="#eucalyptus">
-                            <span class="hide-for-small" i18n:translate="">Log in to Eucalyptus</span>
-                            <span class="show-for-small" i18n:translate="">Eucalyptus</span>
+                            <span class="hide-for-small" i18n:translate="">Log in to ATS</span>
+                            <span class="show-for-small" i18n:translate="">ATS</span>
                         </a>
                     </dd>
                     <dd id="aws-tab" tal:condition="layout.aws_enabled">
@@ -94,7 +94,7 @@
                             <div class="row">
                                 <div class="small-12 columns">
                                     <button type="submit" class="submit button" id="euca-login-button" i18n:translate="" ng-disabled="eucaNotValid">
-                                        Log in to Eucalyptus
+                                        Log in to ATS
                                     </button>
                                 </div>
                                 <div class="small-12 columns" ng-show="isLoggingIn">

@@ -2678,7 +2678,7 @@ msgstr ""
 
 #: eucaconsole/templates/login.pt:33
 msgid ""
-"Warning! JavaScript is not enabled on your browser. To use the Eucalyptus"
+"Warning! JavaScript is not enabled on your browser. To use the ATS"
 " Management Console, please enable JavaScript in your browser's settings."
 msgstr ""
 
@@ -2693,11 +2693,11 @@ msgid ""
 msgstr ""
 
 #: eucaconsole/templates/login.pt:50 eucaconsole/templates/login.pt:91
-msgid "Log in to Eucalyptus"
+msgid "Log in to ATS"
 msgstr ""
 
 #: eucaconsole/templates/login.pt:51
-msgid "Eucalyptus"
+msgid "ATS"
 msgstr ""
 
 #: eucaconsole/templates/login.pt:56 eucaconsole/templates/login.pt:136
@@ -3052,7 +3052,7 @@ msgid ""
 msgstr ""
 
 #: eucaconsole/templates/master_layout.pt:10
-msgid "Eucalyptus Management Console"
+msgid "ATS Management Console"
 msgstr ""
 
 #: eucaconsole/templates/master_layout.pt:64
@@ -3065,7 +3065,7 @@ msgid "Log out"
 msgstr ""
 
 #: eucaconsole/templates/master_layout.pt:115
-msgid "Eucalyptus cloud software version:"
+msgid "ATS cloud software version:"
 msgstr ""
 
 #: eucaconsole/templates/master_layout.pt:121
@@ -6392,7 +6392,7 @@ msgstr ""
 #: eucaconsole/templates/keypairs/keypair_view.pt:82
 msgid ""
 "Importing a public key allows you to use an existing SSH key to access "
-"your Eucalyptus instances."
+"your ATS instances."
 msgstr ""
 
 #: eucaconsole/templates/keypairs/keypair_view.pt:106
@@ -7875,7 +7875,7 @@ msgstr ""
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:5
 msgid ""
-"This AWS template contains services or resources that Eucalyptus does not"
+"This AWS template contains services or resources that ATS does not"
 " yet support."
 msgstr ""
 
@@ -7897,8 +7897,8 @@ msgstr ""
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:44
 msgid ""
-"It appears you have selected an AWS template to create a stack on a "
-"Eucalyptus cloud."
+"It appears you have selected an AWS template to create a stack on an "
+"ATS cloud."
 msgstr ""
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:47
@@ -10539,7 +10539,7 @@ msgstr ""
 #~ msgid "Note: <dynamic element> is reserved for root device"
 #~ msgstr ""
 
-#~ msgid "Eucalyptus cloud software version: <dynamic element>"
+#~ msgid "ATS cloud software version: <dynamic element>"
 #~ msgstr ""
 
 #~ msgid "Associate <dynamic element> with an elastic IP address."
