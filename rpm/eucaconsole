@@ -1,4 +1,4 @@
-#!/usr/bin/python -tt
+#!/usr/bin/python2 -tt
 
 import sys
 from pkg_resources import load_entry_point
