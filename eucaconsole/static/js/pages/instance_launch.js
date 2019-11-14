@@ -180,7 +180,7 @@ angular.module('LaunchInstance', ['TagEditor', 'BlockDeviceMappingEditor', 'Imag
                     // Do not enable the button if the input is empty. However, raise no error message
                     $scope.isNotValid = true;
                     $scope.imageIDErrorClass = "";
-                }else if( $scope.imageID.length > 12 ){
+                }else if( $scope.imageID.length > 21 ){  // 12 and 21 are valid lengths for short/long identifiers
                     // If the imageID length is longer then 12, disable the button and raise error message
                     $scope.isNotValid = true;
                     $scope.imageIDErrorClass = "error";
@@ -188,7 +188,7 @@ angular.module('LaunchInstance', ['TagEditor', 'BlockDeviceMappingEditor', 'Imag
                     // If the imageID length is longer than 4, and they do not consist of "emi-" or "ami-", disable the button and raise error message
                     $scope.isNotValid = true;
                     $scope.imageIDErrorClass = "error";
-                }else if( $scope.imageID.length == 12 ){
+                }else if( $scope.imageID.length == 12 || $scope.imageID.length == 21 ){
                     // If the above conditions are met and the image ID length is 12, enable the button
                     $scope.isNotValid = false;
                     $scope.imageIDErrorClass = "";
