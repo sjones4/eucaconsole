@@ -59,3 +59,8 @@ def custom_locale_negotiator(request):
             locale_name = default_locale
     return locale_name
 
+def fixed_locale_negotiator(request):
+    """
+    Return the locale from the pyramid.default_local_name setting
+    """
+    return request.registry.settings.get('pyramid.default_locale_name', 'en')
