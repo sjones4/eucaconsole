@@ -101,9 +101,6 @@ Requires:       nginx
 
 # TODO:  patch config to write to syslog
 # TODO:  ship a syslog config file
-# TODO:  move static content to /usr/share/%{name}
-# TODO:  change the nginx config to point to new location for static content
-
 
 %description
 The Eucalyptus Management Console is a web-based interface to a local
@@ -135,8 +132,10 @@ install -m 755 %{name}.py $RPM_BUILD_ROOT/usr/bin/%{name}
 
 # Install conf file
 install -d $RPM_BUILD_ROOT/etc/%{name}
+install -d $RPM_BUILD_ROOT/etc/%{name}/nginx.conf.d
 install -m 755 conf/console.default.ini $RPM_BUILD_ROOT/etc/%{name}/console.ini
 install -m 755 conf/nginx.conf $RPM_BUILD_ROOT/etc/%{name}/nginx.conf
+install -m 755 conf/50-nginx-static.conf $RPM_BUILD_ROOT/etc/%{name}/nginx.conf.d/50-nginx-static.conf
 install -m 755 conf/memcached $RPM_BUILD_ROOT/etc/%{name}/memcached
 
 # Install /run/eucaconsole for PID file and other data
