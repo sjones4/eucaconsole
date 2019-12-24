@@ -59,8 +59,9 @@ class MasterLayout(object):
         self.context = context
         self.request = request
         self.version = __version__
+        self.product_url = request.registry.settings.get('product.url')
         self.help_url = request.registry.settings.get('help.url')
-        self.support_url = request.registry.settings.get('support.url') or "http://support.eucalyptus.com"
+        self.support_url = request.registry.settings.get('support.url') or "https://docs.eucalyptus.cloud/"
         self.aws_enabled = asbool(request.registry.settings.get('aws.enabled'))
         self.browser_password_save = 'true' if asbool(
             request.registry.settings.get('browser.password.save')) else 'false'
