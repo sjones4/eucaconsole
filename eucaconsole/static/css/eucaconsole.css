@@ -1927,7 +1927,7 @@ table.table.smart-table .st-sort-descent:after { content: '\25BC'; }
 ----------------------------------------- */
 footer { background-color: #000000; color: white; padding: 15px 0 3rem 1rem; }
 footer .columns.logo { padding-left: 0.5rem; }
-footer #euca-logo { display: inline-block; width: 220px; height: 25px; background: url("../img/eucalyptus-logo-rev.png") no-repeat; }
+footer #euca-logo { display: inline-block; width: 240px; height: 32px; background: url("../img/console-logo.png") no-repeat; }
 footer .copyright { padding-top: 8px; text-align: right; color: #666666; font-size: 14px; }
 footer .copyright a { color: #666666; }
 footer .copyright a:hover { text-decoration: underline; }

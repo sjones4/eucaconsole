@@ -122,7 +122,8 @@ def get_configurator(settings, enable_auth=True):
     if not os.path.exists(locale_dir) and os.path.exists('/usr/share/locale'):
         locale_dir = '/usr/share/locale'
     config.add_translation_dirs(locale_dir)
-    config.set_locale_negotiator(custom_locale_negotiator)
+    config.set_locale_negotiator(settings.get('pyramid.locale_negotiator',
+                                              custom_locale_negotiator))
 
     for route in urls:
         config.add_route(route.name, route.pattern)

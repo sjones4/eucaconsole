@@ -1,4 +1,4 @@
-# French translations for eucaconsole.
+# English translations for atsconsole.
 # Copyright (C) 2014 ORGANIZATION
 # This file is distributed under the same license as the eucaconsole
 # project.
@@ -9,10 +9,10 @@ msgstr ""
 "Project-Id-Version: eucaconsole 4.0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2019-12-22 21:50-0800\n"
-"PO-Revision-Date: 2014-04-16 12:49-0700\n"
+"PO-Revision-Date: 2014-03-25 13:16-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: eucaconsole/layout.py:56 eucaconsole/templates/master_layout.pt:10
 #: eucaconsole/templates/master_layout.pt:52
 msgid "Eucalyptus Management Console"
-msgstr ""
+msgstr "ATS Management Console"
 
 #: eucaconsole/layout.py:115
 #, python-format
@@ -2675,6 +2675,8 @@ msgid ""
 "Warning! JavaScript is not enabled on your browser. To use the Eucalyptus"
 " Management Console, please enable JavaScript in your browser's settings."
 msgstr ""
+"Warning! JavaScript is not enabled on your browser. To use the ATS"
+" Management Console, please enable JavaScript in your browser's settings."
 
 #: eucaconsole/templates/login.pt:39
 msgid "WARNING: SSL not enabled"
@@ -2688,11 +2690,11 @@ msgstr ""
 
 #: eucaconsole/templates/login.pt:50 eucaconsole/templates/login.pt:96
 msgid "Log in to Eucalyptus"
-msgstr ""
+msgstr "Log in to ATS"
 
 #: eucaconsole/templates/login.pt:51
 msgid "Eucalyptus"
-msgstr ""
+msgstr "ATS"
 
 #: eucaconsole/templates/login.pt:56 eucaconsole/templates/login.pt:148
 msgid "Log in to AWS"
@@ -2870,6 +2872,11 @@ msgid ""
 " resource searching easier, and improve coordination between multiple "
 "users."
 msgstr ""
+"To help you manage your cloud's instances, images, and other ATS "
+"resources, you can optionally assign your own metadata to each resource "
+"in the form of tags. You can use tags to create user-friendly names, make"
+" resource searching easier, and improve coordination between multiple "
+"users."
 
 #: eucaconsole/templates/macros.pt:380
 msgid "Volume device options for Linux"
@@ -3074,7 +3081,7 @@ msgstr ""
 
 #: eucaconsole/templates/master_layout.pt:116
 msgid "Eucalyptus cloud software version:"
-msgstr ""
+msgstr "ATS cloud software version:"
 
 #: eucaconsole/templates/master_layout.pt:122
 msgid "Session Timeout"
@@ -6445,6 +6452,8 @@ msgid ""
 "Importing a public key allows you to use an existing SSH key to access "
 "your Eucalyptus instances."
 msgstr ""
+"Importing a public key allows you to use an existing SSH key to access "
+"your ATS instances."
 
 #: eucaconsole/templates/keypairs/keypair_view.pt:106
 #: eucaconsole/views/keypairs.py:111
@@ -7972,6 +7981,8 @@ msgid ""
 "This AWS template contains services or resources that Eucalyptus does not"
 " yet support."
 msgstr ""
+"This AWS template contains services or resources that ATS does not"
+" yet support."
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:8
 msgid "Please edit the template to remove the unsupported items and try again."
@@ -7994,6 +8005,8 @@ msgid ""
 "It appears you have selected an AWS template to create a stack on a "
 "Eucalyptus cloud."
 msgstr ""
+"It appears you have selected an AWS template to create a stack on a "
+"ATS cloud."
 
 #: eucaconsole/templates/stacks/stack_aws_dialogs.pt:47
 msgid ""
@@ -10517,6 +10530,60 @@ msgid ""
 "status to update."
 msgstr ""
 
+#~ msgid "No Keypair"
+#~ msgstr ""
+
+#~ msgid "Unit is required"
+#~ msgstr ""
+
+#~ msgid "Number of instances is required"
+#~ msgstr ""
+
+#~ msgid "No available volumes in the availability zone"
+#~ msgstr ""
+
+#~ msgid "Delete alarm"
+#~ msgstr ""
+
+#~ msgid "Associate IP address to instance"
+#~ msgstr ""
+
+#~ msgid "Associate <dynamic element> with IP address"
+#~ msgstr ""
+
+#~ msgid "Associate address"
+#~ msgstr ""
+
+#~ msgid "Disassociate IP address from instance"
+#~ msgstr ""
+
+#~ msgid ""
+#~ msgstr ""
+
+#~ msgid "IP ADDRESS"
+#~ msgstr ""
+
+#~ msgid "INSTANCE"
+#~ msgstr ""
+
+#~ msgid "Yes, disassociate"
+#~ msgstr ""
+
+#~ msgid "Attach time"
+#~ msgstr ""
+
+#~ msgid "No device"
+#~ msgstr ""
+
+#~ msgid "Set Resource"
+#~ msgstr ""
+
+#~ msgid "Creating policy user {0}"
+#~ msgstr ""
+
+#~ msgid "Updating user {0}"
+#~ msgstr ""
+
 #~ msgid "%H:%M:%S %p %b %d %Y"
 #~ msgstr ""
 
@@ -10533,9 +10600,6 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Volume size is required"
-#~ msgstr ""
-
-#~ msgid ""
 #~ msgstr ""
 
 #~ msgid "Logout"
@@ -11185,4 +11249,5 @@ msgstr ""
 
 #~ msgid "<dynamic element>&nbsp; <dynamic element>"
 #~ msgstr ""
+
 

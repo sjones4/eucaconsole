@@ -148,7 +148,7 @@
                 <button class="button expand" i18n:translate="" ng-if="!deletingCorsConfig">
                     Yes, Delete CORS Configuration
                 </button>
-                <button class="button expand" i18n:translate="" ng-if="deletingCorsConfig" disabled="disabled">
+                <button class="button expand" ng-if="deletingCorsConfig" disabled="disabled">
                     <span i18n:translate="">Deleting CORS Configuration</span>&nbsp;
                     <span class="busy"></span>
                 </button>
