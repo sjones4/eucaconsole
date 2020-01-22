@@ -1,0 +1,12 @@
+#!/bin/sh
+# Reload eucaconsole https certificates
+set -eu
+
+if [ -f "/run/eucaconsole/nginx.pid" ] ; then
+  # signal eucaconsole nginx for reload
+  NGINX_PID=$(<"/run/eucaconsole/nginx.pid")
+  [ -z "${NGINX_PID}" ] || kill -HUP "${NGINX_PID}"
+else
+  # systemd service handles reload
+  systemctl reload-or-try-restart eucaconsole
+fi
