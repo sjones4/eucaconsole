@@ -43,6 +43,7 @@ Source1:        %{name}.init
 Source2:        %{name}
 Source3:        %{name}.sysconfig
 Source4:        %{name}.tmpfiles
+Source5:        %{name}-reload-https
 
 Patch0:         %{name}.default.ini.patch
 
@@ -111,6 +112,7 @@ Eucalyptus cloud and/or AWS services.
 %setup -q -n %{tarball_basedir}
 cp -p %{SOURCE1} .
 cp -p %{SOURCE2} %{name}.py
+cp -p %{SOURCE5} .
 %patch0 -p0 -F3
 
 
@@ -126,9 +128,10 @@ python2 setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/init.d
 install -m 755 %{name}.init $RPM_BUILD_ROOT/etc/init.d/%{name}
 
-# Install executable
+# Install executables
 install -d $RPM_BUILD_ROOT/usr/bin
 install -m 755 %{name}.py $RPM_BUILD_ROOT/usr/bin/%{name}
+install -m 755 %{name}-reload-https $RPM_BUILD_ROOT/usr/bin/%{name}-reload-https
 
 # Install conf file
 install -d $RPM_BUILD_ROOT/etc/%{name}
@@ -152,6 +155,9 @@ touch $RPM_BUILD_ROOT/var/log/%{name}_startup.log
 install -d $RPM_BUILD_ROOT/%_sysconfdir/sysconfig/
 install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%_sysconfdir/sysconfig/%{name}
 
+# Install web root for well known
+mkdir -p $RPM_BUILD_ROOT/var/lib/%{name}/well-known-root
+
 %find_lang %{name}
 
 
@@ -165,13 +171,15 @@ install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%_sysconfdir/sysconfig/%{name}
 /usr/share/%{name}
 %config(noreplace) /etc/%{name}
 %{_bindir}/%{name}
+%{_bindir}/%{name}-reload-https
 /etc/init.d/%{name}
 %config(noreplace) /etc/sysconfig/%{name}
 %{_tmpfilesdir}/%{name}.conf
 %attr(-,eucaconsole,eucaconsole) %dir /var/run/%{name}
 %attr(-,eucaconsole,eucaconsole) /var/log/%{name}.log
 %attr(-,eucaconsole,eucaconsole) /var/log/%{name}_startup.log
-
+%dir /var/lib/%{name}
+%dir /var/lib/%{name}/well-known-root
 
 %pre
 getent group eucaconsole >/dev/null || groupadd -r eucaconsole
@@ -195,6 +203,9 @@ if [ "$1" -ge "1" ] ; then
 fi
 
 %changelog
+* Tue Jan 21 2020 Steve Jones <steve.jones@appscale.com> - 5.0
+- Configuration and helper script to simplify certbot use
+
 * Fri Mar  9 2018 Steve Jones <steve.jones@appscale.com> - 4.4.3
 - Build now handles rpm version
 
