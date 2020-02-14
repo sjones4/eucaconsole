@@ -71,7 +71,7 @@ start() {
 
     if [ "x$NGINX_FLAGS" != xNO ]; then
         echo -n "Starting eucaconsole nginx: "
-        daemon /usr/sbin/nginx -c /etc/eucaconsole/nginx.conf $NGINX_FLAGS
+        daemon --pidfile ${NGINXPIDFILE} /usr/sbin/nginx -c /etc/eucaconsole/nginx.conf $NGINX_FLAGS
         [ $? -eq 0 ] && touch /var/lock/subsys/eucaconsole-nginx
         echo
     fi
